@@ -1,0 +1,5 @@
+
+
+class Config:
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:123456@43.138.70.51:3306/android'
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
