@@ -31,4 +31,28 @@
         app:layout_constraintLeft_toRightOf="@+id/myButton"
         android:text="Click" />
 
+    <EditText
+        android:id="@+id/myAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="请输入账号"
+        app:layout_constraintTop_toBottomOf="@id/myButton"/>
+
+    <EditText
+        android:id="@+id/myPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="请输入密码"
+        app:layout_constraintTop_toBottomOf="@id/myAccount"/>
+
+    <Button
+        android:id="@+id/myLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="登录"
+        android:onClick="Login"
+        app:layout_constraintTop_toBottomOf="@id/myPassword"/>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
