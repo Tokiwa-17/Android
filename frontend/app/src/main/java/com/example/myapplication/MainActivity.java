@@ -6,11 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.myapplication.request.base.BaseGetRequest;
 import com.example.myapplication.request.testRequest.testGet;
 import com.example.myapplication.request.testRequest.testGet2;
+import com.example.myapplication.request.testRequest.testPost;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -26,6 +29,9 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
     private String CALLBACK = "callback";
     private TextView myTextView = null;
+    private Button myLogin = null;
+    private EditText myAccount = null;
+    private EditText myPassword = null;
     private String msg = null;
 
     @Override
@@ -33,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         myTextView = findViewById(R.id.myTextView);
-
+        myLogin = findViewById(R.id.myLogin);
+        myAccount = findViewById(R.id.myAccount);
+        myPassword = findViewById(R.id.myPassword);
     }
 
     public void updateMsg(View v) {
@@ -63,5 +71,21 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(CALLBACK, "onResponse");
             }
         }).send();
+    }
+
+    public void Login(View v) {
+        String Account = myAccount.getText().toString();
+        String Password = myPassword.getText().toString();
+        new testPost(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.e("error", e.toString());
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Log.e(CALLBACK, "onResponse");
+            }
+        }, "", Account, Password).send();
     }
 }
