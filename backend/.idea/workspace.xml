@@ -26,7 +26,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -57,6 +57,8 @@
       <option name="presentableId" value="Default" />
       <updated>1651640226125</updated>
       <workItem from="1651640228053" duration="2275000" />
+      <workItem from="1651646103081" duration="1462000" />
+      <workItem from="1651651022902" duration="4284000" />
     </task>
     <servers />
   </component>
