@@ -1,5 +1,5 @@
 from flask import Flask, url_for
-from . import test, db, comment, block, notice, like
+from . import test, user, post, draft, follow, db, comment, block, notice, like
 
 
 def create_app(config_name='default'):
@@ -13,7 +13,10 @@ def create_app(config_name='default'):
     comment.init_app(app)
     notice.init_app(app)
     like.init_app(app)
-
+    user.init_app(app)
+    post.init_app(app)
+    draft.init_app(app)
+    follow.init_app(app)
 
 
     return app
