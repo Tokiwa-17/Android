@@ -2,14 +2,13 @@ import uuid
 
 from ..db import db
 
-class Test(db.Model):
-    __tablename__ = 'test'
+class Block(db.Model):
+    __tablename__ = 'block'
 
-    id = db.Column(db.String(32), primary_key=True)
+    blocked_user_id = db.Column(db.String(32), primary_key=True)
+    user_id = db.Column(db.String(32), primary_key=True)
 
     def __repr__(self):
-        return '<Test %r>' % self.id
+        return '<Block %r>' % self.blocked_user_id
 
-    def __init__(self):
-        self.id = str(uuid.uuid4()).replace("-", "")
 

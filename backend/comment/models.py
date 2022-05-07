@@ -2,15 +2,17 @@ import uuid
 
 from ..db import db
 
-class Block(db.Model):
-    __tablename__ = 'block'
+class Comment(db.Model):
+    __tablename__ = 'comment'
 
-    blocked_user_id = db.Column(db.String(32), primary_key=True)
-    user_id = db.Column(db.String(32), primary_key=True)
+    comment_id = db.Column(db.String(32), primary_key=True)
+    post_id = db.Column(db.String(32))
+    user_id = db.Column(db.String(32))
+    text = db.Column(db.String(128))
 
     def __repr__(self):
-        return '<Block %r>' % self.id
+        return '<comment %r>' % self.comment_id
 
     def __init__(self):
-        self.id = str(uuid.uuid4()).replace("-", "")
+        self.comment_id = str(uuid.uuid4()).replace("-", "")
 
