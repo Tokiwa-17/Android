@@ -17,7 +17,7 @@ class Post(db.Model):
     like_num = db.Column(db.Integer, default=0)
 
     def __repr__(self):
-        return '<Post %r>' % self.id
+        return '<Post %r>' % self.post_id
 
     def __init__(self):
         self.post_id = str(uuid.uuid4()).replace("-", "")
