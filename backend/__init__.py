@@ -1,5 +1,5 @@
 from flask import Flask, url_for
-from . import test, db
+from . import test, user, post, db
 
 
 def create_app(config_name='default'):
@@ -9,5 +9,7 @@ def create_app(config_name='default'):
 
     db.init_app(app)
     test.init_app(app)
+    user.init_app(app)
+    post.init_app(app)
 
     return app
