@@ -109,7 +109,6 @@ public class LoginActivity extends com.example.androidapp.activity.BaseActivity 
     @OnClick(R.id.logon_button)
     public void onClickLogon() {
         Log.e("OnClick", "Switch");
-        if (isLogin) return;
         Intent intent = new Intent(LoginActivity.this, LogonActivity.class);
         startActivity(intent);
     }
