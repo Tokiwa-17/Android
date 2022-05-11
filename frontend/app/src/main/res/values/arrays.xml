@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="t_s_type">
+        <item name="teacher">导师</item>
+        <item name="student">学生</item>
+    </string-array>
+
+</resources>
