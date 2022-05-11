@@ -67,6 +67,6 @@
             android:layout_marginRight="20dp"
             android:text="注册"/>
     </LinearLayout>
-    
+
 
 </LinearLayout>
