@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,7 +18,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 import com.example.myapplication.R;
-import com.example.myapplication.request.user.LoginRequest;
+import com.example.myapplication.request.user.LogonRequest;
 import com.example.myapplication.utils.Global;
 
 import org.jetbrains.annotations.NotNull;
@@ -27,16 +28,16 @@ import org.w3c.dom.Text;
 
 import java.io.IOException;
 
-public class LoginActivity extends com.example.androidapp.activity.BaseActivity {
+public class LogonActivity extends com.example.androidapp.activity.BaseActivity {
     /*变量*/
-    @BindView(R.id.login_account)
+    @BindView(R.id.logon_account)
     EditText accountEditText;
 
-    @BindView(R.id.login_password)
+    @BindView(R.id.logon_password)
     EditText passwordEditText;
 
-    @BindView(R.id.login_button)
-    Button loginButton;
+    @BindView(R.id.logon_confirm)
+    EditText confirmEditText;
 
     @BindView(R.id.logon_button)
     Button logonButton;
@@ -93,7 +94,7 @@ public class LoginActivity extends com.example.androidapp.activity.BaseActivity 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_logon);
         ButterKnife.bind(this);
     }
 
@@ -102,21 +103,23 @@ public class LoginActivity extends com.example.androidapp.activity.BaseActivity 
     /******************************
      ************ 事件 ************
      ******************************/
-    @OnClick(R.id.login_button)
-    public void onClickLogin() {
+    @OnClick(R.id.logon_button)
+    public void onClickLogon() {
         Log.e("OnClick", "ttttttttttttttttttt");
         if (isLogin) return;
         String account = accountEditText.getText().toString();
         String password = passwordEditText.getText().toString();
-        new LoginRequest(this.handleLogin, account, password).send();
-    }
+        String confirm = confirmEditText.getText().toString();
+        if(!confirm.equals(password)){
+            Toast.makeText(LogonActivity.this, "两次密码输入不相同"+password+","+confirm, Toast.LENGTH_LONG).show();
+        }
+        else{
+            new LogonRequest(this.handleLogin, account, password).send();
+            Toast.makeText(LogonActivity.this, "注册成功", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(LogonActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
 
-    @OnClick(R.id.logon_button)
-    public void onClickLogon() {
-        Log.e("OnClick", "Switch");
-        if (isLogin) return;
-        Intent intent = new Intent(LoginActivity.this, LogonActivity.class);
-        startActivity(intent);
     }
 
 }
