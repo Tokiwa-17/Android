@@ -67,15 +67,6 @@
             android:layout_marginRight="20dp"
             android:text="注册"/>
     </LinearLayout>
-
-
-
-    <Button
-        android:id="@+id/logon_button"
-        android:onClick="onClickLogon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="注册" />
-
+    
 
 </LinearLayout>
