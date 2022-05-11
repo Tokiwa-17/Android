@@ -17,3 +17,12 @@ def test_user():
     db.session.add(new_user)
     db.session.commit()
     return "user_test success!", 200
+
+@user.route('/api/user/login', methods=['GET', 'POST'])
+def user_login():
+    data = request.form
+    print(f"data:{data}")
+    account = data.get('account')
+    password = data.get('password')
+    print(f"account: {account}, password: {password}")
+    return "OK", 200
