@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.myapplication.R;
 import com.example.myapplication.request.base.BaseGetRequest;
 import com.example.myapplication.request.testRequest.testGet;
 import com.example.myapplication.request.testRequest.testGet2;
