@@ -25,7 +25,13 @@ def user_login():
     account = data.get('account')
     password = data.get('password')
     print(f"account: {account}, password: {password}")
-    return "OK", 200
+    user = User.query.filter(User.account == account).first()
+    print(f'user: {user}')
+    print(f'json:{user.to_json()}')
+    if user != None and user.password == password:
+        return user.to_json(), 200
+    return "登录失败", 404
+
 
 @user.route('/api/user/logon', methods=['GET', 'POST'])
 def user_logon():

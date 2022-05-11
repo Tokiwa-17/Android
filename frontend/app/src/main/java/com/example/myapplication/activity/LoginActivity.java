@@ -1,11 +1,10 @@
 package com.example.myapplication.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -19,11 +18,10 @@ import okhttp3.ResponseBody;
 import com.example.myapplication.R;
 import com.example.myapplication.request.user.LoginRequest;
 import com.example.myapplication.utils.Global;
+import com.example.myapplication.utils.Hint;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 
@@ -49,35 +47,27 @@ public class LoginActivity extends com.example.androidapp.activity.BaseActivity 
     private okhttp3.Callback handleLogin = new okhttp3.Callback() {
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-            //loginActivity.this.runOnUiThread(() -> Hint.endActivityLoad(LoginActivity.this));
-//            try {
-//                if (response.code() != 200) {
-////                    LoginCache.removeCache(getApplicationContext());
-////                    LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "登录失败..."));
-//                } else {
-//                    ResponseBody responseBody = response.body();
-//                    String responseBodyString = responseBody != null ? responseBody.string() : "";
-//                    if (Global.HTTP_DEBUG_MODE)
-//                        Log.e("HttpResponse", responseBodyString);
-//                    JSONObject jsonObject = new JSONObject(responseBodyString);
-//                    boolean status = (Boolean) jsonObject.get("status");
-//                    String info = (String) jsonObject.get("info");
-//                    if (status) {
-//
-//                        // 保存密码以加入shared...
-////                        BasicInfo.PASSWORD = passwordEditText.getText().toString();
-////                        LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, info));
-////                        beforeJump1();
-//                    } else {
-////                        LoginCache.removeCache(getApplicationContext());
-////                        LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, info));
-//                    }
-//                }
-//            } catch (JSONException e) {
-////                LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "登录失败..."));
-//                if (Global.HTTP_DEBUG_MODE)
-//                    Log.e("HttpResponse", e.toString());
-//            }
+            LoginActivity.this.runOnUiThread(() -> Hint.endActivityLoad(LoginActivity.this));
+            try {
+                if (response.code() != 200) {
+                    LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "登录失败..."));
+                } else {
+                    ResponseBody responseBody = response.body();
+                    String responseBodyString = responseBody != null ? responseBody.string() : "";
+                    if (Global.HTTP_DEBUG_MODE)
+                        Log.e("HttpResponse", responseBodyString);
+                        JSONObject jsonObject = new JSONObject(responseBodyString);
+
+
+                    LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "登录成功..."));
+
+                    onJumpToMain();
+                }
+            } catch (Exception e) {
+                LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "登录失败..."));
+                if (Global.HTTP_DEBUG_MODE)
+                    Log.e("HttpResponse", e.toString());
+            }
         }
 
         @Override
@@ -97,7 +87,12 @@ public class LoginActivity extends com.example.androidapp.activity.BaseActivity 
         ButterKnife.bind(this);
     }
 
-
+    private void onJumpToMain() {
+        Hint.endActivityLoad(LoginActivity.this);
+        isLogin = true;
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
 
     /******************************
      ************ 事件 ************
