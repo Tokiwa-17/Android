@@ -18,3 +18,13 @@ class User(db.Model):
     def __init__(self):
         self.id = str(uuid.uuid4()).replace("-", "")
 
+    def to_json(self):
+        return {
+            'id': self.id,
+            'account': self.account,
+            'password': self.password,
+            'avatar': self.avatar,
+            'nickname': self.nickname,
+            'introduction': self.introduction,
+        }
+
