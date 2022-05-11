@@ -1,5 +1,7 @@
 package com.example.myapplication.activity;
 
+
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -106,8 +108,10 @@ public class LoginActivity extends com.example.androidapp.activity.BaseActivity 
 
     @OnClick(R.id.logon_button)
     public void onClickLogon() {
-        //TODO: 跳转到注册页面
-        //Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        //startActivity(intent);
+        Log.e("OnClick", "Switch");
+        if (isLogin) return;
+        Intent intent = new Intent(LoginActivity.this, LogonActivity.class);
+        startActivity(intent);
     }
+
 }

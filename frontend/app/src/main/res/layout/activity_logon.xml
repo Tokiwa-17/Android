@@ -16,13 +16,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ACCOUNT"
+            android:inputType="textEmailAddress"
             android:textSize="35sp"/>
+
         <EditText
-            android:layout_toRightOf="@+id/text_account"
-            android:id="@+id/login_account"
+            android:id="@+id/logon_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp"
+            android:hint="电子邮箱"
+            android:layout_toRightOf="@+id/text_account" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -36,38 +39,32 @@
             android:textSize="35sp"/>
         <EditText
             android:layout_toRightOf="@+id/text_password"
-            android:id="@+id/login_password"
+            android:id="@+id/logon_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
+            android:hint="密码"
             android:layout_marginBottom="20dp"/>
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/login_button"
-            android:onClick="onClickLogin"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/text_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:text="登录" />
-
-        <Button
-            android:layout_toRightOf="@+id/login_button"
-            android:id="@+id/logon_button"
-            android:layout_width="wrap_content"
+            android:text="@string/PASSWORD"
+            android:textSize="35sp"/>
+        <EditText
+            android:layout_toRightOf="@+id/text_confirm"
+            android:id="@+id/logon_confirm"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:text="注册"/>
-    </LinearLayout>
-
+            android:inputType="textPassword"
+            android:hint="确认密码"
+            android:layout_marginBottom="20dp"/>
+    </RelativeLayout>
 
 
     <Button

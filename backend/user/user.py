@@ -31,3 +31,19 @@ def user_login():
     if user != None and user.password == password:
         return user.to_json(), 200
     return "登录失败", 404
+
+
+@user.route('/api/user/logon', methods=['GET', 'POST'])
+def user_logon():
+    data = request.form
+    print(f"data:{data}")
+    account = data.get('account')
+    password = data.get('password')
+    new_user = User()
+    new_user.account = account
+    new_user.password = password
+    new_user.nickname = "user_" + new_user.id[0:10]
+    db.session.add(new_user)
+    db.session.commit()
+    print(f"account: {account}, password: {password}")
+    return "OK", 200
