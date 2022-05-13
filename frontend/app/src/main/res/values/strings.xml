@@ -23,4 +23,6 @@
 
     <!--提示信息-->
     <string name="CANNOT_BE_NULL">该项不能为空</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
