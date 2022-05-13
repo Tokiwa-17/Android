@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.utils.BasicInfo;
+import com.example.myapplication.utils.Global;
 import com.example.myapplication.utils.MyImageLoader;
 import com.google.android.material.tabs.TabLayout;
 
@@ -39,6 +41,9 @@ public class DashboardFragment extends Fragment {
 
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
+
+    @BindView(R.id.num_focus)
+    TextView numFocus;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -96,6 +101,7 @@ public class DashboardFragment extends Fragment {
         name.setText(BasicInfo.mName);
         signature.setText(BasicInfo.mSingnature);
         MyImageLoader.loadImage(imgAvatar, BasicInfo.mAvatarUrl);
+        numFocus.setText(Integer.toString(BasicInfo.mFollowerNumber));
         return root;
     }
 
