@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">forum</string>
 
     <!--登录与注册页面-->
     <string name="INTRODUCE">介绍</string>
