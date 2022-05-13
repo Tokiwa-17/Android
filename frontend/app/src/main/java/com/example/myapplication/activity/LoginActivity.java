@@ -17,6 +17,7 @@ import okhttp3.ResponseBody;
 
 import com.example.myapplication.R;
 import com.example.myapplication.request.user.LoginRequest;
+import com.example.myapplication.utils.BasicInfo;
 import com.example.myapplication.utils.Global;
 import com.example.myapplication.utils.Hint;
 
@@ -54,11 +55,15 @@ public class LoginActivity extends com.example.androidapp.activity.BaseActivity 
                 } else {
                     ResponseBody responseBody = response.body();
                     String responseBodyString = responseBody != null ? responseBody.string() : "";
-                    if (Global.HTTP_DEBUG_MODE)
+                    if (Global.HTTP_DEBUG_MODE) {
                         Log.e("HttpResponse", responseBodyString);
-                        JSONObject jsonObject = new JSONObject(responseBodyString);
-
-
+                    }
+                    JSONObject jsonObject = new JSONObject(responseBodyString);
+                    BasicInfo.mName = jsonObject.getString("nickname");
+                    BasicInfo.mAccount = jsonObject.getString("account");
+                    BasicInfo.mPassword = jsonObject.getString("password");
+                    BasicInfo.mAvatarUrl = jsonObject.getString("avatar");
+                    BasicInfo.mSingnature = jsonObject.getString("introduction");
                     LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "登录成功..."));
 
                     onJumpToMain();
