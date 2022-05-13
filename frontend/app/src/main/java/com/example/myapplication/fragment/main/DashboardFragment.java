@@ -1,5 +1,6 @@
 package com.example.myapplication.fragment.main;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +8,18 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.utils.BasicInfo;
+import com.example.myapplication.utils.MyImageLoader;
+import com.google.android.material.tabs.TabLayout;
+
+import org.w3c.dom.Text;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +27,18 @@ import com.example.myapplication.R;
  * create an instance of this fragment.
  */
 public class DashboardFragment extends Fragment {
+
+    @BindView(R.id.img_avatar)
+    ImageView imgAvatar;
+
+    @BindView(R.id.homepage_name)
+    TextView name;
+
+    @BindView(R.id.signature)
+    TextView signature;
+
+    @BindView(R.id.tab_layout)
+    TabLayout tabLayout;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +84,19 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false);
+        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        ButterKnife.bind(this, root);
+
+        tabLayout.addTab(tabLayout.newTab().setText("通知列表"));
+        tabLayout.addTab(tabLayout.newTab().setText("动态列表"));
+        tabLayout.setBackgroundColor(Color.WHITE);
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        // 获取用户信息并设置
+        name.setText(BasicInfo.mName);
+        signature.setText(BasicInfo.mSingnature);
+        MyImageLoader.loadImage(imgAvatar, BasicInfo.mAvatarUrl);
+        return root;
     }
+
 }
