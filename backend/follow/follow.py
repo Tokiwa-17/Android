@@ -47,4 +47,32 @@ def get_followed_list():
                 followed_list.append({'nickname':user.nickname, "avatar":user.avatar, 'introduction':user.introduction})
     return {'followed_list': followed_list}, 200
 
+@follow.route('/api/follow/get_watchlist',  methods=['GET'])
+def get_watch_list():
+    id = request.args.get('user_id')
+    print(f'id: {id}')
+    followed_list = []
+    follow_query = Follow.query.filter(Follow.followed_user_id == id)
+    if follow_query != None:
+        for follower in follow_query:
+            user_id = follower.user_id
+            print(f'user_id: {user_id}')
+            user_query = User.query.filter(User.id == user_id)
+            for user in user_query:
+                followed_list.append({'id': user.id, 'name':user.nickname, "url":user.avatar, 'introduction':user.introduction})
+    return {'watchlist': followed_list}, 200
 
+@follow.route('/api/follow/get_fanlist',  methods=['GET'])
+def get_fan_list():
+    id = request.args.get('user_id')
+    print(f'id: {id}')
+    followed_list = []
+    follow_query = Follow.query.filter(Follow.user_id == id)
+    if follow_query != None:
+        for follower in follow_query:
+            user_id = follower.followed_user_id
+            print(f'user_id: {user_id}')
+            user_query = User.query.filter(User.id == user_id)
+            for user in user_query:
+                followed_list.append({'id': user.id, 'name':user.nickname, "url":user.avatar, 'introduction':user.introduction})
+    return {'fanlist': followed_list}, 200

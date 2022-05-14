@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.MainActivityPagerAdapter;
+import com.example.myapplication.fragment.main.DashboardFragment;
 import com.example.myapplication.request.base.BaseGetRequest;
 import com.example.myapplication.request.testRequest.testGet;
 import com.example.myapplication.request.testRequest.testGet2;
@@ -68,50 +69,34 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.nav_host_fragment);
         mMainActivityPagerAdapter = new MainActivityPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(mMainActivityPagerAdapter);
-    }
+        viewPager.setOffscreenPageLimit(5);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
 
-//    public void updateMsg(View v) {
-//        new testGet(new Callback() {
-//            @Override
-//            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-//                Log.e("error", e.toString());
-//            }
-//
-//            @Override
-//            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-//                msg = response.body().string();
-//                Log.e("MSG", msg);
-//            }
-//        }).send();
-//    }
-//
-//    public void updateMsg2(View v) {
-//        new testGet2(new Callback() {
-//            @Override
-//            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-//                Log.e("error", e.toString());
-//            }
-//
-//            @Override
-//            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-//                Log.e(CALLBACK, "onResponse");
-//            }
-//        }).send();
-//    }
-//
-//    public void Login(View v) {
-//        String Account = myAccount.getText().toString();
-//        String Password = myPassword.getText().toString();
-//        new testPost(new Callback() {
-//            @Override
-//            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-//                Log.e("error", e.toString());
-//            }
-//
-//            @Override
-//            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-//                Log.e(CALLBACK, "onResponse");
-//            }
-//        }, "", Account, Password).send();
-//    }
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        navView.getMenu().findItem(R.id.navigation_home).setChecked(true);
+                        break;
+                    case 1:
+                        navView.getMenu().findItem(R.id.navigation_follow).setChecked(true);
+                        break;
+                    case 2:
+                        navView.getMenu().findItem(R.id.navigation_conversations).setChecked(true);
+                        break;
+                    case 3:
+                        navView.getMenu().findItem(R.id.navigation_notifications).setChecked(true);
+                        break;
+                    default:
+                        ((DashboardFragment) mMainActivityPagerAdapter.getRegisteredFragment(4)).changeFocus();
+                        navView.getMenu().findItem(R.id.navigation_dashboard).setChecked(true);
+                        break;
+                }
+            }
+        });
+    }
 }
