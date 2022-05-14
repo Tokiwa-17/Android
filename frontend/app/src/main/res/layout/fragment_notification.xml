@@ -6,9 +6,14 @@
     tools:context=".fragment.main.NotificationFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:text="TODO: Fragment_notification" />-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="TODO: Fragment_notification" />
+        android:layout_height="match_parent" />
+
 
 </FrameLayout>

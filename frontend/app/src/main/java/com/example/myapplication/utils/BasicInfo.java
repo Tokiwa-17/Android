@@ -1,6 +1,7 @@
 package com.example.myapplication.utils;
 
 import com.example.myapplication.entity.ShortProfile;
+import com.example.myapplication.entity.NoticeInfo;
 import com.example.myapplication.entity.UserInfo;
 
 import java.util.ArrayList;
@@ -22,4 +23,7 @@ public class BasicInfo {
 
     public static List<ShortProfile> WATCH_LIST = Collections.synchronizedList(new ArrayList<>());
     public static List<ShortProfile> FAN_LIST = Collections.synchronizedList(new ArrayList<>());
+
+    public static List<NoticeInfo> mNoticeList;
+    public static int mNoticeNumber;
 }
