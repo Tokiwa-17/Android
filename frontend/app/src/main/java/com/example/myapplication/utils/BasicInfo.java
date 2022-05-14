@@ -1,5 +1,6 @@
 package com.example.myapplication.utils;
 
+import com.example.myapplication.entity.NoticeInfo;
 import com.example.myapplication.entity.UserInfo;
 
 import java.util.List;
@@ -16,4 +17,7 @@ public class BasicInfo {
     public static int mFollowerNumber;
     public static List<UserInfo> mFollowedList;
     public static int mFollowedNumber;
+    public static List<NoticeInfo> mNoticeList;
+    public static int mNoticeNumber;
+
 }
