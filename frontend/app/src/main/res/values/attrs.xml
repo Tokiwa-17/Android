@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="FocusButton">
+        <attr name="bg_color_pressed" format="color"></attr>
+        <attr name="bg_color" format="color"></attr>
+        <attr name="text_color_pressed" format="color"></attr>
+        <attr name="text_color" format="color"></attr>
+        <attr name="radius" format="dimension"></attr>
+        <attr name="text_pressed" format="string"></attr>
+        <attr name="text" format="string"></attr>
+        <attr name="border_width" format="integer"></attr>
+        <attr name="border_color_pressed" format="color"></attr>
+        <attr name="border_color" format="color"></attr>
+    </declare-styleable>
+
+</resources>

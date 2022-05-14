@@ -101,7 +101,7 @@ public class DashboardFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
         ButterKnife.bind(this, root);
 
-        tabLayout.addTab(tabLayout.newTab().setText("通知列表"));
+        tabLayout.addTab(tabLayout.newTab().setText("草稿列表"));
         tabLayout.addTab(tabLayout.newTab().setText("动态列表"));
         tabLayout.setBackgroundColor(Color.WHITE);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -124,4 +124,7 @@ public class DashboardFragment extends Fragment {
         return root;
     }
 
+    public void changeFocus() {
+        numFocus.setText(String.valueOf(BasicInfo.WATCH_LIST.size()));
+    }
 }

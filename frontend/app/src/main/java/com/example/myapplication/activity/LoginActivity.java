@@ -15,13 +15,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 import com.example.myapplication.R;
+import com.example.myapplication.entity.ShortProfile;
 import com.example.myapplication.adapter.NotificationAdapter;
 import com.example.myapplication.entity.NoticeInfo;
+
 import com.example.myapplication.entity.UserInfo;
+import com.example.myapplication.request.follow.GetFanlistRequest;
+import com.example.myapplication.request.follow.GetWatchlistRequest;
 import com.example.myapplication.request.follow.getFollowList;
 import com.example.myapplication.request.follow.getFollowedList;
 import com.example.myapplication.request.notification.getNoticeList;
@@ -32,6 +37,7 @@ import com.example.myapplication.utils.Hint;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -52,6 +58,7 @@ public class LoginActivity extends BaseActivity {
     Button logonButton;
 
     boolean isLogin = false;
+    int count = 0;
 
     /******************************
      ************ 回调 ************
@@ -179,6 +186,67 @@ public class LoginActivity extends BaseActivity {
                 Log.e("HttpError", e.toString());
         }
     };
+    private okhttp3.Callback getWatchListCallback = new Callback() {
+        @Override
+        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+            Log.e("error1", e.toString());
+            addCounter();
+        }
+
+        @Override
+        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            String resStr = response.body().string();
+            Log.e("response", resStr);
+            try {
+                JSONObject jsonObject = new JSONObject(resStr);
+                JSONArray jsonArray;
+                jsonArray = (JSONArray) jsonObject.get("watchlist");
+                if(BasicInfo.WATCH_LIST.isEmpty() == false) {
+                    BasicInfo.WATCH_LIST.clear();
+                }
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    ShortProfile shortProfile = new ShortProfile(jsonArray.getJSONObject(i));
+                    BasicInfo.WATCH_LIST.add(shortProfile);
+                }
+                addCounter();
+            } catch (JSONException e) {
+                addCounter();
+                Log.e("error2", e.toString());
+            }
+
+        }
+    };
+
+    private okhttp3.Callback getFollowListCallback = new Callback() {
+        @Override
+        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+            Log.e("error1", e.toString());
+            addCounter();
+        }
+
+        @Override
+        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            String resStr = response.body().string();
+            Log.e("response", resStr);
+            try {
+                JSONObject jsonObject = new JSONObject(resStr);
+                JSONArray jsonArray;
+                jsonArray = (JSONArray) jsonObject.get("fanlist");
+                if(BasicInfo.FAN_LIST.isEmpty() == false) {
+                    BasicInfo.FAN_LIST.clear();
+                }
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    ShortProfile shortProfile = new ShortProfile(jsonArray.getJSONObject(i));
+                    BasicInfo.FAN_LIST.add(shortProfile);
+                }
+                addCounter();
+            } catch (JSONException e) {
+                addCounter();
+                Log.e("error2", e.toString());
+            }
+
+        }
+    };
 
     private okhttp3.Callback handleNoticeList = new okhttp3.Callback() {
         @Override
@@ -228,6 +296,10 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+
+        accountEditText.setText("ylf");
+        passwordEditText.setText("123456");
     }
 
     private void beforeJump(String mId) {
@@ -235,6 +307,14 @@ public class LoginActivity extends BaseActivity {
         new getFollowList(this.handleFollowList, mId).send();
         // 填充被关注列表
         new getFollowedList(this.handleFollowedList, mId).send();
+
+        int count = 0;
+        new GetFanlistRequest(getFollowListCallback, mId).send();
+        new GetWatchlistRequest(getWatchListCallback, mId).send();
+    }
+
+    private synchronized void addCounter() {
+        count++;
         // 填充消息列表
         new getNoticeList(this.handleNoticeList,mId).send();
     }

@@ -3,12 +3,18 @@ package com.example.myapplication.fragment.main;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.myapplication.R;
+import com.google.android.material.tabs.TabLayout;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,14 +23,19 @@ import com.example.myapplication.R;
  */
 public class FollowFragment extends Fragment {
 
+    @BindView(R.id.pager_follow)
+    ViewPager viewPager;
+
+    @BindView(R.id.tab_layout)
+    TabLayout tabLayout;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Unbinder unbinder;
 
     public FollowFragment() {
         // Required empty public constructor
@@ -49,18 +60,16 @@ public class FollowFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_follow, container, false);
+        View root = inflater.inflate(R.layout.fragment_follow, container, false);
+        unbinder = ButterKnife.bind(this, root);
+
+        tabLayout.addTab(tabLayout.newTab().setText("关注"));
+        tabLayout.addTab(tabLayout.newTab().setText("粉丝"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        return root;
     }
 }

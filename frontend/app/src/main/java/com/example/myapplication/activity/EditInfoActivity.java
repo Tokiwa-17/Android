@@ -1,12 +1,12 @@
 package com.example.myapplication.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toolbar;
 
 import com.andreabaccega.widget.FormEditText;
 import com.example.myapplication.activity.BaseActivity;
@@ -45,6 +45,9 @@ public class EditInfoActivity extends BaseActivity {
 
     @BindView(R.id.edit_signature)
     FormEditText editSignature;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     /******************************
      ************ 回调 ************
@@ -94,6 +97,8 @@ public class EditInfoActivity extends BaseActivity {
         editPassword.setText(BasicInfo.mPassword);
         editPassword2.setText(BasicInfo.mPassword);
         editSignature.setText(BasicInfo.mSingnature);
+
+        toolbar.setNavigationOnClickListener(v -> this.finish());
     }
 
     @OnClick(R.id.edit_info_save)
