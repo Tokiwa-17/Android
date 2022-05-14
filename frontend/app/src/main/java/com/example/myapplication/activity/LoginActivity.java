@@ -3,6 +3,8 @@ package com.example.myapplication.activity;
 import com.example.myapplication.activity.BaseActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,9 +19,12 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 import com.example.myapplication.R;
+import com.example.myapplication.adapter.NotificationAdapter;
+import com.example.myapplication.entity.NoticeInfo;
 import com.example.myapplication.entity.UserInfo;
 import com.example.myapplication.request.follow.getFollowList;
 import com.example.myapplication.request.follow.getFollowedList;
+import com.example.myapplication.request.notification.getNoticeList;
 import com.example.myapplication.request.user.LoginRequest;
 import com.example.myapplication.utils.BasicInfo;
 import com.example.myapplication.utils.Global;
@@ -30,6 +35,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.LinkedList;
 
 public class LoginActivity extends BaseActivity {
     /*变量*/
@@ -174,6 +180,48 @@ public class LoginActivity extends BaseActivity {
         }
     };
 
+    private okhttp3.Callback handleNoticeList = new okhttp3.Callback() {
+        @Override
+        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            try {
+                if (response.code() != 200) {
+                    //LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "获取关注列表失败..."));
+                } else {
+                    ResponseBody responseBody = response.body();
+                    String responseBodyString = responseBody != null ? responseBody.string() : "";
+                    if (Global.HTTP_DEBUG_MODE) {
+                        Log.e("HttpResponse", responseBodyString);
+                    }
+                    JSONObject jsonObject = new JSONObject(responseBodyString);
+                    JSONArray jsonArray = (JSONArray) jsonObject.get("notice_list");
+                    if(BasicInfo.mNoticeList != null) {
+                        BasicInfo.mNoticeList.clear();
+                    }
+                    BasicInfo.mNoticeNumber = jsonArray.length();
+                    BasicInfo.mNoticeList = new LinkedList<>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
+                        String type = subJsonObject.getString("type");
+                        String text = subJsonObject.getString("text");
+                        NoticeInfo notice = new NoticeInfo(type, text);
+                        BasicInfo.mNoticeList.add(notice);
+                    }
+                }
+            } catch (Exception e) {
+                if (Global.HTTP_DEBUG_MODE)
+                    Log.e("HttpResponse", e.toString());
+            }
+        }
+
+        @Override
+        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+//            LoginActivity.this.runOnUiThread(() -> Hint.endActivityLoad(LoginActivity.this));
+//            LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "登录失败..."));
+            if (Global.HTTP_DEBUG_MODE)
+                Log.e("HttpError", e.toString());
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,6 +235,8 @@ public class LoginActivity extends BaseActivity {
         new getFollowList(this.handleFollowList, mId).send();
         // 填充被关注列表
         new getFollowedList(this.handleFollowedList, mId).send();
+        // 填充消息列表
+        new getNoticeList(this.handleNoticeList,mId).send();
     }
 
     private void onJumpToMain() {
