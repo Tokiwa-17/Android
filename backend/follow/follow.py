@@ -32,6 +32,19 @@ def get_follow_list():
                 follow_list.append({'nickname':user.nickname, "avatar":user.avatar, 'introduction':user.introduction})
     return {'follow_list': follow_list}, 200
 
-
+@follow.route('/api/follow/get_followed_list', methods=['GET'])
+def get_followed_list():
+    id = request.args.get('user_id')
+    print(f'id: {id}')
+    followed_list = []
+    follow_query = Follow.query.filter(Follow.followed_user_id == id)
+    if follow_query != None:
+        for follower in follow_query:
+            user_id = follower.user_id
+            print(f'user_id: {user_id}')
+            user_query = User.query.filter(User.id == user_id)
+            for user in user_query:
+                followed_list.append({'nickname':user.nickname, "avatar":user.avatar, 'introduction':user.introduction})
+    return {'followed_list': followed_list}, 200
 
 

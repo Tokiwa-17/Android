@@ -1,5 +1,6 @@
 package com.example.myapplication.activity;
 
+import com.example.myapplication.activity.BaseActivity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -28,7 +29,7 @@ import org.w3c.dom.Text;
 
 import java.io.IOException;
 
-public class LogonActivity extends com.example.androidapp.activity.BaseActivity {
+public class LogonActivity extends BaseActivity {
     /*变量*/
     @BindView(R.id.logon_account)
     EditText accountEditText;

@@ -15,4 +15,5 @@ public class BasicInfo {
     public static List<UserInfo> mFollowList;
     public static int mFollowerNumber;
     public static List<UserInfo> mFollowedList;
+    public static int mFollowedNumber;
 }

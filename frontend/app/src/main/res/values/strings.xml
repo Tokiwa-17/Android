@@ -21,6 +21,9 @@
     <string name="title_conversations">会话</string>
     <string name="title_follow">关注</string>
 
+    <!--我的-->
+    <string name="edit_user_info">编辑个人信息</string>
+
     <!--提示信息-->
     <string name="CANNOT_BE_NULL">该项不能为空</string>
     <!-- TODO: Remove or change this placeholder text -->
