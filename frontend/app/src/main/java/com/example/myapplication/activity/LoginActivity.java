@@ -307,7 +307,9 @@ public class LoginActivity extends BaseActivity {
         new getFollowList(this.handleFollowList, mId).send();
         // 填充被关注列表
         new getFollowedList(this.handleFollowedList, mId).send();
-
+        // 填充消息列表
+        new getNoticeList(this.handleNoticeList,mId).send();
+        
         int count = 0;
         new GetFanlistRequest(getFollowListCallback, mId).send();
         new GetWatchlistRequest(getWatchListCallback, mId).send();
@@ -315,8 +317,7 @@ public class LoginActivity extends BaseActivity {
 
     private synchronized void addCounter() {
         count++;
-        // 填充消息列表
-        new getNoticeList(this.handleNoticeList,mId).send();
+
     }
 
     private void onJumpToMain() {
