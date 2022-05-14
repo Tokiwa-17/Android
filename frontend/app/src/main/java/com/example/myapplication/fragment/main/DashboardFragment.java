@@ -1,5 +1,6 @@
 package com.example.myapplication.fragment.main;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -9,10 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.EditInfoActivity;
 import com.example.myapplication.utils.BasicInfo;
 import com.example.myapplication.utils.Global;
 import com.example.myapplication.utils.MyImageLoader;
@@ -44,6 +47,12 @@ public class DashboardFragment extends Fragment {
 
     @BindView(R.id.num_focus)
     TextView numFocus;
+
+    @BindView(R.id.num_focused)
+    TextView numFocused;
+
+    @BindView(R.id.btn_edit)
+    Button editBtn;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -97,11 +106,21 @@ public class DashboardFragment extends Fragment {
         tabLayout.setBackgroundColor(Color.WHITE);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
+        // 修改用户信息
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), EditInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+
         // 获取用户信息并设置
         name.setText(BasicInfo.mName);
         signature.setText(BasicInfo.mSingnature);
         MyImageLoader.loadImage(imgAvatar, BasicInfo.mAvatarUrl);
         numFocus.setText(Integer.toString(BasicInfo.mFollowerNumber));
+        numFocused.setText(Integer.toString(BasicInfo.mFollowedNumber));
         return root;
     }
 

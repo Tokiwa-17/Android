@@ -47,3 +47,18 @@ def user_logon():
     db.session.commit()
     print(f"account: {account}, password: {password}")
     return "OK", 200
+
+@user.route('/api/user/update_user_info', methods=['POST'])
+def user_update_info():
+    data = request.form
+    id = data.get('id')
+    nickname = data.get('nickname')
+    password = data.get('password')
+    intro = data.get('introduction')
+    user = User.query.filter_by(id=id).first()
+    user.nickname = nickname
+    user.password = password
+    user.introduction = intro
+    print(f'nickname: {nickname}, password: {password}, intro: {intro}')
+    db.session().commit()
+    return {"nickname": nickname, "password": password, "introduction": intro}, 200

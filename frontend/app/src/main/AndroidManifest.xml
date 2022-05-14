@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
+            android:name=".activity.EditInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.LogonActivity"
             android:exported="true" />
         <activity
@@ -27,7 +30,7 @@
         </activity>
         <activity
             android:name=".activity.MainActivity"
-            android:exported="true"/>
+            android:exported="true" />
     </application>
 
 </manifest>

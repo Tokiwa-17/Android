@@ -10,7 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.myapplication.R;
-import com.example.androidapp.activity.BaseActivity;
+import com.example.myapplication.activity.BaseActivity;
 import com.kingja.loadsir.callback.Callback;
 import com.kingja.loadsir.core.LoadSir;
 import com.rubengees.introduction.Slide;

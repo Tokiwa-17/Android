@@ -1,5 +1,6 @@
 package com.example.myapplication.activity;
 
+import com.example.myapplication.activity.BaseActivity;
 import android.app.Activity;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class ActivityCollector {
     /**
      * 获取 Activity
      */
-    static com.example.androidapp.activity.BaseActivity getActivity(int position) {
-        return (com.example.androidapp.activity.BaseActivity) activities.get(position);
+    static BaseActivity getActivity(int position) {
+        return (BaseActivity) activities.get(position);
     }
 }

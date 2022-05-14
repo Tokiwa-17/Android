@@ -1,5 +1,6 @@
 package com.example.myapplication.activity;
 
+import com.example.myapplication.activity.BaseActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -18,6 +19,7 @@ import okhttp3.ResponseBody;
 import com.example.myapplication.R;
 import com.example.myapplication.entity.UserInfo;
 import com.example.myapplication.request.follow.getFollowList;
+import com.example.myapplication.request.follow.getFollowedList;
 import com.example.myapplication.request.user.LoginRequest;
 import com.example.myapplication.utils.BasicInfo;
 import com.example.myapplication.utils.Global;
@@ -29,7 +31,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class LoginActivity extends com.example.androidapp.activity.BaseActivity {
+public class LoginActivity extends BaseActivity {
     /*变量*/
     @BindView(R.id.login_account)
     EditText accountEditText;
@@ -74,6 +76,48 @@ public class LoginActivity extends com.example.androidapp.activity.BaseActivity 
                 }
             } catch (Exception e) {
                 LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "登录失败..."));
+                if (Global.HTTP_DEBUG_MODE)
+                    Log.e("HttpResponse", e.toString());
+            }
+        }
+
+        @Override
+        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+//            LoginActivity.this.runOnUiThread(() -> Hint.endActivityLoad(LoginActivity.this));
+//            LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "登录失败..."));
+            if (Global.HTTP_DEBUG_MODE)
+                Log.e("HttpError", e.toString());
+        }
+    };
+
+    private okhttp3.Callback handleFollowedList = new okhttp3.Callback() {
+        @Override
+        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            try {
+                if (response.code() != 200) {
+                    //LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "获取关注列表失败..."));
+                } else {
+                    ResponseBody responseBody = response.body();
+                    String responseBodyString = responseBody != null ? responseBody.string() : "";
+                    if (Global.HTTP_DEBUG_MODE) {
+                        Log.e("HttpResponse", responseBodyString);
+                    }
+                    JSONObject jsonObject = new JSONObject(responseBodyString);
+                    JSONArray jsonArray = (JSONArray) jsonObject.get("followed_list");
+                    if(BasicInfo.mFollowedList != null) {
+                        BasicInfo.mFollowedList.clear();
+                    }
+                    BasicInfo.mFollowedNumber = jsonArray.length();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
+                        String nickname = subJsonObject.getString("nickname");
+                        String avatar = subJsonObject.getString("avatar");
+                        String intro = subJsonObject.getString("introduction");
+                        UserInfo user = new UserInfo(nickname, avatar, intro);
+                        BasicInfo.mFollowedList.add(user);
+                    }
+                }
+            } catch (Exception e) {
                 if (Global.HTTP_DEBUG_MODE)
                     Log.e("HttpResponse", e.toString());
             }
@@ -141,6 +185,8 @@ public class LoginActivity extends com.example.androidapp.activity.BaseActivity 
     private void beforeJump(String mId) {
         // 填充关注列表
         new getFollowList(this.handleFollowList, mId).send();
+        // 填充被关注列表
+        new getFollowedList(this.handleFollowedList, mId).send();
     }
 
     private void onJumpToMain() {
