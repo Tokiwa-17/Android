@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
+            android:name=".activity.VisitHomePageActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.EditInfoActivity"
             android:exported="false" />
         <activity

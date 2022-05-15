@@ -309,7 +309,7 @@ public class LoginActivity extends BaseActivity {
         new getFollowedList(this.handleFollowedList, mId).send();
         // 填充消息列表
         new getNoticeList(this.handleNoticeList,mId).send();
-        
+
         int count = 0;
         new GetFanlistRequest(getFollowListCallback, mId).send();
         new GetWatchlistRequest(getWatchListCallback, mId).send();

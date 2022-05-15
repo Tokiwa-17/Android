@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.myapplication.R;
+import com.example.myapplication.adapter.FollowPagerAdapter;
+import com.example.myapplication.utils.MyImageLoader;
 import com.google.android.material.tabs.TabLayout;
 
 import butterknife.BindView;
@@ -70,6 +72,24 @@ public class FollowFragment extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setText("粉丝"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
+        FollowPagerAdapter pagerAdapter = new FollowPagerAdapter(getActivity().getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        viewPager.setOffscreenPageLimit(0);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) { }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) { }
+        });
+
         return root;
     }
+
 }
