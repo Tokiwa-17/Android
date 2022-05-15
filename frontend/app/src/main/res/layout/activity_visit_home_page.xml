@@ -1,9 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.VisitHomePageActivity">
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/visit_homepage_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:title=""
+            app:titleEnabled="false">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@color/white"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:layout_collapseMode="pin"
+
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_toLeftOf="@+id/btn_edit"
+                            android:text="@string/edit_user_info"
+                            android:layout_marginRight="5dp"
+                            android:textColor="@color/black"/>
+
+                        <Button
+                            android:id="@+id/btn_edit"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="18dp"
+                            android:background="@drawable/ic_edit_black_24dp"></Button>
+                    </RelativeLayout>
+
+                </androidx.appcompat.widget.Toolbar>
+
+                <RelativeLayout
+                    android:layout_marginTop="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorPrimary"
+                    app:layout_scrollFlags="scroll|enterAlways|snap">
+
+                    <LinearLayout
+                        android:id="@+id/layout_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/img_avatar"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="20dp"
+                            android:clickable="true"
+                            android:src="@drawable/ic_avatarholder" />
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="50dp">
+
+                                <TextView
+                                    android:id="@+id/homepage_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginRight="30dp"
+                                    android:text="name"
+                                    android:textColor="@android:color/white"
+                                    android:textSize="18sp" />
+
+                                <TextView
+                                    android:id="@+id/signature"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="40dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_toRightOf="@+id/homepage_name"
+                                    android:text="introduction"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp" />
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="40dp"
+                                android:orientation="horizontal"
+                                android:padding="16dp">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/num_focus"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text=""
+                                        android:textColor="@color/white"
+                                        android:textSize="20sp"></TextView>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="关注"
+                                        android:textAlignment="center"
+                                        android:textColor="@android:color/white"
+                                        android:textSize="12sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/num_focused"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="0"
+                                        android:textColor="@color/white"
+                                        android:textSize="20sp"></TextView>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="被关注"
+                                        android:textAlignment="center"
+                                        android:textColor="@android:color/white"
+                                        android:textSize="12sp" />
+
+                                </LinearLayout>
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:tabIndicatorColor="#C0C0C0" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"></androidx.viewpager.widget.ViewPager>
+</LinearLayout>
