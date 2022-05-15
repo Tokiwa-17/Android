@@ -1,11 +1,15 @@
 package com.example.myapplication.fragment.follow;
 
+import com.example.myapplication.activity.VisitHomePageActivity;
 import com.example.myapplication.adapter.ShortProfileAdapter;
+
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,25 +62,6 @@ public class FollowListFragment extends Fragment {
         unbinder = ButterKnife.bind(this, root);
 
         profileList = new ArrayList<>();
-
-        shortProfileAdapter = new ShortProfileAdapter(profileList, getContext());
-        shortProfileAdapter.setRecyclerManager(recyclerView);
-        shortProfileAdapter.setOnItemClickListener((adapter, view, position) -> {
-            //visitHomePage(true, position);
-        });
-
-
-        return root;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        int size = profileList.size();
-        if (size > 0) {
-            profileList.clear();
-            shortProfileAdapter.notifyItemRangeRemoved(0, size);
-        }
         if (isWatchList) { //关注列表
             for (ShortProfile shortProfile : BasicInfo.WATCH_LIST) {
                 profileList.add(shortProfile);
@@ -86,5 +71,25 @@ public class FollowListFragment extends Fragment {
                 profileList.add(shortProfile);
             }
         }
+        shortProfileAdapter = new ShortProfileAdapter(profileList, getContext());
+        shortProfileAdapter.setRecyclerManager(recyclerView);
+        shortProfileAdapter.setOnItemClickListener((adapter, view, position) -> {
+            visitHomePage(position);
+        });
+
+
+
+        return root;
+    }
+
+    public void visitHomePage(int position) {
+        Intent intent = new Intent(getContext(), VisitHomePageActivity.class);
+        ShortProfile shortProfile;
+        shortProfile = profileList.get(position);
+        intent.putExtra("id", shortProfile.id);
+        intent.putExtra("name", shortProfile.name);
+        intent.putExtra("url", shortProfile.url);
+        intent.putExtra("intro", shortProfile.intro);
+        startActivity(intent);
     }
 }

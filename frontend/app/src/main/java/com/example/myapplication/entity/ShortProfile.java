@@ -52,7 +52,7 @@ public class ShortProfile implements Parcelable {
     public ShortProfile(JSONObject jsonObject) throws JSONException {
         this.id = jsonObject.getString("id");
         this.name = jsonObject.getString("name");
-        this.url = Global.SERVER_URL + jsonObject.getString("url");
+        this.url = jsonObject.getString("url");
         this.intro = jsonObject.getString("introduction");
     }
 
