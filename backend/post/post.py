@@ -22,4 +22,18 @@ def post_test():
     db.session.commit()
     return "post_test success!", 200
 
+@post.route('/api/post/get_mypost', methods=['GET', 'POST']) # 前端向后端数据库发送数据
+def get_mypost():
+    id = request.args.get('user_id')
+    print(f'id: {id}')
+    post_list = []
+    post_query = Post.query.filter(Post.user_id == id)
+    if post_query != None:
+        for post in post_query:
+            title = post.title
+            text = post.text
+            print(f'text: {text}')
+            post_list.append({'title':title, 'text':text})
+    return {'post_list': post_list}, 200
+
 
