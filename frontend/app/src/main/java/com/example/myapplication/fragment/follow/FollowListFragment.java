@@ -78,12 +78,18 @@ public class FollowListFragment extends Fragment {
         });
 
 
+
         return root;
     }
 
     public void visitHomePage(int position) {
         Intent intent = new Intent(getContext(), VisitHomePageActivity.class);
-
+        ShortProfile shortProfile;
+        shortProfile = profileList.get(position);
+        intent.putExtra("id", shortProfile.id);
+        intent.putExtra("name", shortProfile.name);
+        intent.putExtra("url", shortProfile.url);
+        intent.putExtra("intro", shortProfile.intro);
         startActivity(intent);
     }
 }
