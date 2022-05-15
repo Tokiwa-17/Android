@@ -20,6 +20,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 import com.example.myapplication.R;
+import com.example.myapplication.entity.PostInfo;
 import com.example.myapplication.entity.ShortProfile;
 import com.example.myapplication.adapter.NotificationAdapter;
 import com.example.myapplication.entity.NoticeInfo;
@@ -30,6 +31,7 @@ import com.example.myapplication.request.follow.GetWatchlistRequest;
 import com.example.myapplication.request.follow.getFollowList;
 import com.example.myapplication.request.follow.getFollowedList;
 import com.example.myapplication.request.notification.getNoticeList;
+import com.example.myapplication.request.post.getMypost;
 import com.example.myapplication.request.user.LoginRequest;
 import com.example.myapplication.utils.BasicInfo;
 import com.example.myapplication.utils.Global;
@@ -289,7 +291,47 @@ public class LoginActivity extends BaseActivity {
                 Log.e("HttpError", e.toString());
         }
     };
+    private okhttp3.Callback handleMypostList = new okhttp3.Callback() {
+        @Override
+        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            try {
+                if (response.code() != 200) {
+                    //LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "获取关注列表失败..."));
+                } else {
+                    ResponseBody responseBody = response.body();
+                    String responseBodyString = responseBody != null ? responseBody.string() : "";
+                    if (Global.HTTP_DEBUG_MODE) {
+                        Log.e("HttpResponse", responseBodyString);
+                    }
+                    JSONObject jsonObject = new JSONObject(responseBodyString);
+                    JSONArray jsonArray = (JSONArray) jsonObject.get("post_list");
+                    if(BasicInfo.mMypost != null) {
+                        BasicInfo.mMypost.clear();
+                    }
+                    BasicInfo.mMypostNumber = jsonArray.length();
+                    BasicInfo.mMypost = new LinkedList<>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
+                        String title = subJsonObject.getString("title");
+                        String text = subJsonObject.getString("text");
+                        PostInfo post = new PostInfo("test_id","123456",title, text);
+                        BasicInfo.mMypost.add(post);
+                    }
+                }
+            } catch (Exception e) {
+                if (Global.HTTP_DEBUG_MODE)
+                    Log.e("HttpResponse", e.toString());
+            }
+        }
 
+        @Override
+        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+//            LoginActivity.this.runOnUiThread(() -> Hint.endActivityLoad(LoginActivity.this));
+//            LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "登录失败..."));
+            if (Global.HTTP_DEBUG_MODE)
+                Log.e("HttpError", e.toString());
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -309,6 +351,8 @@ public class LoginActivity extends BaseActivity {
         new getFollowedList(this.handleFollowedList, mId).send();
         // 填充消息列表
         new getNoticeList(this.handleNoticeList,mId).send();
+        // 填充我的动态列表
+        new getMypost(this.handleMypostList,mId).send();
         
         int count = 0;
         new GetFanlistRequest(getFollowListCallback, mId).send();

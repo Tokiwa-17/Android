@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,10 +18,12 @@ import android.widget.TextView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activity.EditInfoActivity;
+import com.example.myapplication.adapter.DashboardAdapter;
 import com.example.myapplication.utils.BasicInfo;
 import com.example.myapplication.utils.Global;
 import com.example.myapplication.utils.MyImageLoader;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import org.w3c.dom.Text;
 
@@ -62,7 +66,8 @@ public class DashboardFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    DashboardAdapter mAdapter;
+    ViewPager2 viewPager;
     public DashboardFragment() {
         // Required empty public constructor
     }
@@ -100,9 +105,22 @@ public class DashboardFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
         ButterKnife.bind(this, root);
+        mAdapter = new DashboardAdapter(this);
+        viewPager = root.findViewById(R.id.pager);
+        viewPager.setAdapter(mAdapter);
+        new TabLayoutMediator(tabLayout, viewPager,
+                (tab, position) -> {
+                    switch (position) {
+                        case 0: tab.setText("通知列表");
+                            break;
+                        case 1: tab.setText("动态列表");
+                            break;
 
-        tabLayout.addTab(tabLayout.newTab().setText("草稿列表"));
-        tabLayout.addTab(tabLayout.newTab().setText("动态列表"));
+                    }
+                }
+        ).attach();
+//        tabLayout.addTab(tabLayout.newTab().setText("通知列表"));
+//        tabLayout.addTab(tabLayout.newTab().setText("动态列表"));
         tabLayout.setBackgroundColor(Color.WHITE);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 

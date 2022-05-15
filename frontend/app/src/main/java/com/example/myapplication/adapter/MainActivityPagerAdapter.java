@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.myapplication.fragment.main.DashboardFragment;
+import com.example.myapplication.fragment.main.DraftFragment;
 import com.example.myapplication.fragment.main.NotificationFragment;
 import com.example.myapplication.fragment.main.ConversationFragment;
 import com.example.myapplication.fragment.main.FollowFragment;
@@ -31,7 +32,7 @@ public class MainActivityPagerAdapter extends FragmentStatePagerAdapter {
             case 2:
                 return new ConversationFragment();
             case 3:
-                return new NotificationFragment();
+                return new DraftFragment();
             default:
                 return new DashboardFragment();
         }

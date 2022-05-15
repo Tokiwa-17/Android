@@ -1,5 +1,6 @@
 package com.example.myapplication.utils;
 
+import com.example.myapplication.entity.PostInfo;
 import com.example.myapplication.entity.ShortProfile;
 import com.example.myapplication.entity.NoticeInfo;
 import com.example.myapplication.entity.UserInfo;
@@ -26,4 +27,6 @@ public class BasicInfo {
 
     public static List<NoticeInfo> mNoticeList;
     public static int mNoticeNumber;
+    public static List<PostInfo> mMypost;
+    public static int mMypostNumber;
 }
