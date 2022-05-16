@@ -53,14 +53,14 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_follow:
                     viewPager.setCurrentItem(1);
                     break;
-                case R.id.navigation_conversations:
+//                case R.id.navigation_conversations:
+//                    viewPager.setCurrentItem(2);
+//                    break;
+                case R.id.navigation_notifications:
                     viewPager.setCurrentItem(2);
                     break;
-                case R.id.navigation_notifications:
-                    viewPager.setCurrentItem(3);
-                    break;
                 case R.id.navigation_dashboard:
-                    viewPager.setCurrentItem(4);
+                    viewPager.setCurrentItem(3);
                     break;
             }
             return true;
@@ -85,10 +85,10 @@ public class MainActivity extends AppCompatActivity {
                     case 1:
                         navView.getMenu().findItem(R.id.navigation_follow).setChecked(true);
                         break;
+//                    case 2:
+//                        navView.getMenu().findItem(R.id.navigation_conversations).setChecked(true);
+//                        break;
                     case 2:
-                        navView.getMenu().findItem(R.id.navigation_conversations).setChecked(true);
-                        break;
-                    case 3:
                         navView.getMenu().findItem(R.id.navigation_notifications).setChecked(true);
                         break;
                     default:

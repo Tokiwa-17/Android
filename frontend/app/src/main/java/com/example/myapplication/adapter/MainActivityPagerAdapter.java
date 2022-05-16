@@ -29,9 +29,9 @@ public class MainActivityPagerAdapter extends FragmentStatePagerAdapter {
                 return new HomeFragment();
             case 1:
                 return new FollowFragment();
+//            case 2:
+//                return new ConversationFragment();
             case 2:
-                return new ConversationFragment();
-            case 3:
                 return new DraftFragment();
             default:
                 return new DashboardFragment();

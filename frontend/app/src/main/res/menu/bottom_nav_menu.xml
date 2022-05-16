@@ -11,10 +11,10 @@
         android:icon="@drawable/ic_people_black_24dp"
         android:title="@string/title_follow" />
 
-    <item
-        android:id="@+id/navigation_conversations"
-        android:icon="@drawable/ic_chat_black_24dp"
-        android:title="@string/title_conversations" />
+<!--    <item-->
+<!--        android:id="@+id/navigation_conversations"-->
+<!--        android:icon="@drawable/ic_chat_black_24dp"-->
+<!--        android:title="@string/title_conversations" />-->
 
     <item
         android:id="@+id/navigation_notifications"
