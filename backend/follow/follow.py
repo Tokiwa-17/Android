@@ -76,3 +76,26 @@ def get_fan_list():
             for user in user_query:
                 followed_list.append({'id': user.id, 'name':user.nickname, "url":user.avatar, 'introduction':user.introduction})
     return {'fanlist': followed_list}, 200
+
+@follow.route("/api/follow/delete_from_watch", methods=['GET'])
+def delete_from_watch():
+    user_id = request.args.get('user_id')
+    fan_id = request.args.get('fan_id')
+    follow_query = Follow.query.filter(Follow.user_id == user_id, Follow.followed_user_id == fan_id).first()
+    print(f'{follow_query.user_id}, {follow_query.followed_user_id}')
+    if follow_query != None:
+        db.session.delete(follow_query)
+        db.session.commit()
+    return "OK", 200
+
+@follow.route("/api/follow/add_to_watch", methods=['GET'])
+def add_to_watch():
+    user_id = request.args.get('user_id')
+    fan_id = request.args.get('fan_id')
+    print(f'{user_id}, {fan_id}')
+    new_follow = Follow()
+    new_follow.user_id = user_id
+    new_follow.followed_user_id = fan_id
+    db.session.add(new_follow)
+    db.session.commit()
+    return "OK", 200
