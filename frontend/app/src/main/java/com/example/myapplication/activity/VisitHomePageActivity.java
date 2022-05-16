@@ -40,6 +40,8 @@ public class VisitHomePageActivity extends AppCompatActivity {
     @BindView(R.id.btn_edit)
     Button editBtn;
 
+//    @BindView((R.id.btn_))
+
     public String mName;
     public String mUrl;
     public String mIntro;

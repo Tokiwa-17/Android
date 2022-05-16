@@ -8,6 +8,8 @@ import com.example.myapplication.entity.UserInfo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class BasicInfo {
 
@@ -29,4 +31,22 @@ public class BasicInfo {
     public static int mNoticeNumber;
     public static List<PostInfo> mMypost;
     public static int mMypostNumber;
+
+    public static Lock lock = new ReentrantLock();
+
+    public static void removeFromWatchList(String id) {
+        lock.lock();
+        int i = 0;
+        for (ShortProfile shortProfile : WATCH_LIST) {
+            if (shortProfile.id.equals(id)) break;
+            i++;
+        }
+        if (i < WATCH_LIST.size()) WATCH_LIST.remove(i);
+        lock.unlock();
+    }
+
+    public static void addToWatchList(ShortProfile shortProfile) {
+        shortProfile.isFan = true;
+        WATCH_LIST.add(shortProfile);
+    }
 }
