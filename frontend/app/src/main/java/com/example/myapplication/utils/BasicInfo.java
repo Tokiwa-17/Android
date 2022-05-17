@@ -31,6 +31,8 @@ public class BasicInfo {
     public static int mNoticeNumber;
     public static List<PostInfo> mMypost;
     public static int mMypostNumber;
+    public static List<PostInfo> mTargetpost;
+    public static int mTargetpostNumber;
 
     public static Lock lock = new ReentrantLock();
 
