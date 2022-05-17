@@ -314,7 +314,7 @@ public class LoginActivity extends BaseActivity {
                         JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
                         String title = subJsonObject.getString("title");
                         String text = subJsonObject.getString("text");
-                        PostInfo post = new PostInfo("test_id","123456",title, text);
+                        PostInfo post = new PostInfo(BasicInfo.mName,BasicInfo.mAvatarUrl,title, text);
                         BasicInfo.mMypost.add(post);
                     }
                 }

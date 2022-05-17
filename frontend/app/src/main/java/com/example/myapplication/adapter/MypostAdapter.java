@@ -30,6 +30,8 @@ public class MypostAdapter extends
     private final List<String> mTitleList;
     private final List<String> mTextList;
     private final LayoutInflater mInflater;
+    private final List<String> mNameList;
+    private final List<String> mAvatarUrlList;
 
     class MypostViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
@@ -69,10 +71,14 @@ public class MypostAdapter extends
         mInflater = LayoutInflater.from(context);
         this.mTitleList = new LinkedList<>();
         this.mTextList = new LinkedList<>();
+        this.mNameList = new LinkedList<>();
+        this.mAvatarUrlList = new LinkedList<>();
         if (postList!=null){
             for(int i = 0; i < postList.size(); i++){
                 this.mTitleList.add(postList.get(i).title);
                 this.mTextList.add(postList.get(i).text);
+                this.mNameList.add(postList.get(i).nickname);
+                this.mAvatarUrlList.add(postList.get(i).avatarUrl);
             }
         }
 
@@ -124,8 +130,8 @@ public class MypostAdapter extends
         // Add the data to the view holder.
         holder.titleItemView.setText(mTitleList.get(position));
         holder.textItemView.setText(mTextList.get(position));
-        holder.nicknameItemView.setText(BasicInfo.mName);
-        MyImageLoader.loadImage(holder.imgAvatar, BasicInfo.mAvatarUrl);
+        holder.nicknameItemView.setText(mNameList.get(position));
+        MyImageLoader.loadImage(holder.imgAvatar, mAvatarUrlList.get(position));
 //        holder.wordItemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
