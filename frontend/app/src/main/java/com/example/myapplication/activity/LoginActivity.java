@@ -26,6 +26,7 @@ import com.example.myapplication.adapter.NotificationAdapter;
 import com.example.myapplication.entity.NoticeInfo;
 
 import com.example.myapplication.entity.UserInfo;
+import com.example.myapplication.request.block.getBlockList;
 import com.example.myapplication.request.follow.GetFanlistRequest;
 import com.example.myapplication.request.follow.GetWatchlistRequest;
 import com.example.myapplication.request.follow.getFollowList;
@@ -250,6 +251,37 @@ public class LoginActivity extends BaseActivity {
         }
     };
 
+    private okhttp3.Callback getBlockListCallback = new Callback() {
+        @Override
+        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+            Log.e("error1", e.toString());
+            addCounter();
+        }
+
+        @Override
+        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            String resStr = response.body().string();
+            Log.e("response", resStr);
+            try {
+                JSONObject jsonObject = new JSONObject(resStr);
+                JSONArray jsonArray;
+                jsonArray = (JSONArray) jsonObject.get("blocklist");
+                if(BasicInfo.BLOCK_LIST.isEmpty() == false) {
+                    BasicInfo.BLOCK_LIST.clear();
+                }
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    ShortProfile shortProfile = new ShortProfile(jsonArray.getJSONObject(i));
+                    BasicInfo.BLOCK_LIST.add(shortProfile);
+                }
+                addCounter();
+            } catch (JSONException e) {
+                addCounter();
+                Log.e("error2", e.toString());
+            }
+
+        }
+    };
+
     private okhttp3.Callback handleNoticeList = new okhttp3.Callback() {
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -353,10 +385,13 @@ public class LoginActivity extends BaseActivity {
         new getNoticeList(this.handleNoticeList,mId).send();
         // 填充我的动态列表
         new getMypost(this.handleMypostList,mId).send();
+        // 填充被屏蔽用户列表
+        new getBlockList(getBlockListCallback,mId).send();
         
         int count = 0;
         new GetFanlistRequest(getFollowListCallback, mId).send();
         new GetWatchlistRequest(getWatchListCallback, mId).send();
+
     }
 
     private synchronized void addCounter() {
