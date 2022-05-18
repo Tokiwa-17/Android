@@ -9,8 +9,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.myapplication.R;
+
+import com.luck.picture.lib.adapter.PictureImageGridAdapter;
+import com.luck.picture.lib.basic.PictureSelector;
+import com.luck.picture.lib.config.SelectMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.interfaces.OnResultCallbackListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import com.example.myapplication.adapter.MypostAdapter;
 import com.example.myapplication.utils.BasicInfo;
 
@@ -20,6 +35,19 @@ import com.example.myapplication.utils.BasicInfo;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
+
+    Unbinder unbinder;
+
+    @BindView(R.id.upload_btn)
+    Button uploadBtn;
+
+    // fragment中添加成员变量
+    int aspect_ratio_x = 0;
+    int aspect_ratio_y = 0;
+    private int maxSelectNum = 6;
+    private List<LocalMedia> selectList = new ArrayList<>();
+    private PictureImageGridAdapter adapter;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
