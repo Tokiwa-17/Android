@@ -1,4 +1,6 @@
 from flask import Blueprint, request, jsonify
+
+from ..user.models import User
 from .models import Post
 from ..db import db
 
@@ -6,7 +8,8 @@ from datetime import datetime
 
 post = Blueprint('post', __name__)
 
-@post.route('/api/post_test', methods=['GET', 'POST']) # 前端接受后端字符串数据
+
+@post.route('/api/post_test', methods=['GET', 'POST'])  # 前端接受后端字符串数据
 def post_test():
     new_post = Post()
     new_post.user_id = '1'
@@ -22,7 +25,8 @@ def post_test():
     db.session.commit()
     return "post_test success!", 200
 
-@post.route('/api/post/get_mypost', methods=['GET', 'POST']) # 前端向后端数据库发送数据
+
+@post.route('/api/post/get_mypost', methods=['GET', 'POST'])  # 前端向后端数据库发送数据
 def get_mypost():
     id = request.args.get('user_id')
     print(f'id: {id}')
@@ -33,7 +37,25 @@ def get_mypost():
             title = post.title
             text = post.text
             print(f'text: {text}')
-            post_list.append({'title':title, 'text':text})
+            post_list.append({'title': title, 'text': text})
     return {'post_list': post_list}, 200
 
 
+@post.route('/api/post/get_allpost', methods=['GET', 'POST'])  # 前端向后端数据库发送数据
+def get_allpost():
+    num = request.args.get('num')
+    print(f'num: {num}')
+    post_list = []
+    post_query = Post.query.order_by(Post.time).all()
+    if post_query != None:
+        i = 0
+        for post in post_query:
+            title = post.title
+            text = post.text
+            user_id = post.user_id
+            user = User.query.filter(User.id == user_id).first()
+            name = user.nickname
+            avatar_url = user.avatar
+            print(f'text: {text}')
+            post_list.append({'name': name, 'avatar_url': avatar_url, 'title': title, 'text': text})
+    return {'all_post_list': post_list}, 200
