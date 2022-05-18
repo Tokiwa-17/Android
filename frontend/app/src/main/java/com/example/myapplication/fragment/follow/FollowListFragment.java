@@ -157,6 +157,7 @@ public class FollowListFragment extends Fragment {
         intent.putExtra("name", shortProfile.name);
         intent.putExtra("url", shortProfile.url);
         intent.putExtra("intro", shortProfile.intro);
+        intent.putExtra("isFan", shortProfile.isFan);
         startActivity(intent);
     }
 

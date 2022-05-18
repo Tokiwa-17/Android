@@ -28,17 +28,18 @@ public class ShortProfile implements Parcelable {
     public String url;
     public String intro;
     public boolean isFan;
-
+    public boolean isBlock;
     public ShortProfile() {
 
     }
 
-    public ShortProfile(String id, String name, String url, String intro, boolean isFan) {
+    public ShortProfile(String id, String name, String url, String intro, boolean isFan, boolean isBlock) {
         this.id = id;
         this.name = name;
         this.url = url;
         this.intro = intro;
         this.isFan = isFan;
+        this.isBlock = isBlock;
     }
 
     public ShortProfile(Parcel in) {
@@ -47,6 +48,7 @@ public class ShortProfile implements Parcelable {
         url = in.readString();
         intro = in.readString();
         isFan = in.readByte() != 0;
+        isBlock = in.readByte() != 0;
     }
 
     public ShortProfile(JSONObject jsonObject) throws JSONException {
@@ -64,6 +66,7 @@ public class ShortProfile implements Parcelable {
         dest.writeString(url);
         dest.writeString(intro);
         dest.writeByte((byte) (isFan ? 1 : 0));
+        dest.writeByte((byte) (isBlock ? 1 : 0));
     }
 
     @Override
