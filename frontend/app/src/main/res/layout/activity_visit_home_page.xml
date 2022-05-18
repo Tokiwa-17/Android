@@ -35,22 +35,29 @@
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_toLeftOf="@+id/btn_edit"
-                            android:text="@string/edit_user_info"
-                            android:layout_marginRight="5dp"
-                            android:textColor="@color/black"/>
+                        android:layout_height="80dp"
+                        android:layout_marginBottom="30dp">
 
-                        <Button
-                            android:id="@+id/btn_edit"
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="18dp"
-                            android:background="@drawable/ic_edit_black_24dp"></Button>
+                        <com.example.myapplication.myView.FocusButton
+                            android:id="@+id/focus_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="10dp"
+                            android:layout_toLeftOf="@+id/block_btn"/>
+
+                        <com.example.myapplication.myView.BlockButton
+                            android:id="@+id/block_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="10dp"
+                            android:layout_alignParentRight="true" />
+
                     </RelativeLayout>
 
                 </androidx.appcompat.widget.Toolbar>
@@ -176,19 +183,13 @@
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            app:tabIndicatorColor="#C0C0C0" />
+
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="5dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"></androidx.viewpager.widget.ViewPager>
+        android:layout_height="match_parent" />
+
 </LinearLayout>

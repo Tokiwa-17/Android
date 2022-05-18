@@ -3,6 +3,8 @@ package com.example.myapplication.fragment.main;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.myapplication.R;
+
 import com.luck.picture.lib.adapter.PictureImageGridAdapter;
 import com.luck.picture.lib.basic.PictureSelector;
 import com.luck.picture.lib.config.SelectMimeType;
@@ -23,6 +26,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import com.example.myapplication.adapter.MypostAdapter;
+import com.example.myapplication.utils.BasicInfo;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -88,27 +93,13 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root =  inflater.inflate(R.layout.fragment_home, container, false);
-        unbinder = ButterKnife.bind(this, root);
-
-        uploadBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                PictureSelector.create(this)
-//                    .openSystemGallery(SelectMimeType.ofImage())
-//                    .forResult(new OnResultCallbackListener<LocalMedia>() {
-//                        @Override
-//                        public void onResult(ArrayList<LocalMedia> result) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onCancel() {
-//
-//                        }
-//                    });
-            }
-        });
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        if(BasicInfo.mMypost != null){
+            RecyclerView mRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerview);
+            MypostAdapter mAdapter = new MypostAdapter(getActivity(), BasicInfo.mPostList);
+            mRecyclerView.setAdapter(mAdapter);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+        }
         return root;
     }
 }

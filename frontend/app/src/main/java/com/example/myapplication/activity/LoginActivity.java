@@ -26,11 +26,14 @@ import com.example.myapplication.adapter.NotificationAdapter;
 import com.example.myapplication.entity.NoticeInfo;
 
 import com.example.myapplication.entity.UserInfo;
+import com.example.myapplication.request.block.getBlockList;
+import com.example.myapplication.request.draft.getDraftList;
 import com.example.myapplication.request.follow.GetFanlistRequest;
 import com.example.myapplication.request.follow.GetWatchlistRequest;
 import com.example.myapplication.request.follow.getFollowList;
 import com.example.myapplication.request.follow.getFollowedList;
 import com.example.myapplication.request.notification.getNoticeList;
+import com.example.myapplication.request.post.getAllpost;
 import com.example.myapplication.request.post.getMypost;
 import com.example.myapplication.request.user.LoginRequest;
 import com.example.myapplication.utils.BasicInfo;
@@ -250,6 +253,37 @@ public class LoginActivity extends BaseActivity {
         }
     };
 
+    private okhttp3.Callback getBlockListCallback = new Callback() {
+        @Override
+        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+            Log.e("error1", e.toString());
+            addCounter();
+        }
+
+        @Override
+        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            String resStr = response.body().string();
+            Log.e("response", resStr);
+            try {
+                JSONObject jsonObject = new JSONObject(resStr);
+                JSONArray jsonArray;
+                jsonArray = (JSONArray) jsonObject.get("blocklist");
+                if(BasicInfo.BLOCK_LIST.isEmpty() == false) {
+                    BasicInfo.BLOCK_LIST.clear();
+                }
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    ShortProfile shortProfile = new ShortProfile(jsonArray.getJSONObject(i));
+                    BasicInfo.BLOCK_LIST.add(shortProfile);
+                }
+                addCounter();
+            } catch (JSONException e) {
+                addCounter();
+                Log.e("error2", e.toString());
+            }
+
+        }
+    };
+
     private okhttp3.Callback handleNoticeList = new okhttp3.Callback() {
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -291,6 +325,7 @@ public class LoginActivity extends BaseActivity {
                 Log.e("HttpError", e.toString());
         }
     };
+
     private okhttp3.Callback handleMypostList = new okhttp3.Callback() {
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -314,8 +349,94 @@ public class LoginActivity extends BaseActivity {
                         JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
                         String title = subJsonObject.getString("title");
                         String text = subJsonObject.getString("text");
-                        PostInfo post = new PostInfo("test_id","123456",title, text);
+                        PostInfo post = new PostInfo(BasicInfo.mName,BasicInfo.mAvatarUrl,title, text);
                         BasicInfo.mMypost.add(post);
+                    }
+                }
+            } catch (Exception e) {
+                if (Global.HTTP_DEBUG_MODE)
+                    Log.e("HttpResponse", e.toString());
+            }
+        }
+
+        @Override
+        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+//            LoginActivity.this.runOnUiThread(() -> Hint.endActivityLoad(LoginActivity.this));
+//            LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "登录失败..."));
+            if (Global.HTTP_DEBUG_MODE)
+                Log.e("HttpError", e.toString());
+        }
+    };
+
+    private okhttp3.Callback handleAllpostList = new okhttp3.Callback() {
+        @Override
+        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            try {
+                if (response.code() != 200) {
+                    //LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "获取关注列表失败..."));
+                } else {
+                    ResponseBody responseBody = response.body();
+                    String responseBodyString = responseBody != null ? responseBody.string() : "";
+                    if (Global.HTTP_DEBUG_MODE) {
+                        Log.e("HttpResponse", responseBodyString);
+                    }
+                    JSONObject jsonObject = new JSONObject(responseBodyString);
+                    JSONArray jsonArray = (JSONArray) jsonObject.get("all_post_list");
+                    if(BasicInfo.mPostList != null) {
+                        BasicInfo.mPostList.clear();
+                    }
+                    BasicInfo.mPostNumber = jsonArray.length();
+                    BasicInfo.mPostList = new LinkedList<>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
+                        String title = subJsonObject.getString("title");
+                        String text = subJsonObject.getString("text");
+                        String name = subJsonObject.getString("name");
+                        String avatar_url = subJsonObject.getString("avatar_url");
+                        PostInfo post = new PostInfo(name,avatar_url,title, text);
+                        BasicInfo.mPostList.add(post);
+                    }
+                }
+            } catch (Exception e) {
+                if (Global.HTTP_DEBUG_MODE)
+                    Log.e("HttpResponse", e.toString());
+            }
+        }
+
+        @Override
+        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+//            LoginActivity.this.runOnUiThread(() -> Hint.endActivityLoad(LoginActivity.this));
+//            LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "登录失败..."));
+            if (Global.HTTP_DEBUG_MODE)
+                Log.e("HttpError", e.toString());
+        }
+    };
+
+    private okhttp3.Callback handleDraftList = new okhttp3.Callback() {
+        @Override
+        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            try {
+                if (response.code() != 200) {
+                    //LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "获取关注列表失败..."));
+                } else {
+                    ResponseBody responseBody = response.body();
+                    String responseBodyString = responseBody != null ? responseBody.string() : "";
+                    if (Global.HTTP_DEBUG_MODE) {
+                        Log.e("HttpResponse", responseBodyString);
+                    }
+                    JSONObject jsonObject = new JSONObject(responseBodyString);
+                    JSONArray jsonArray = (JSONArray) jsonObject.get("draft_list");
+                    if(BasicInfo.mDraftlist != null) {
+                        BasicInfo.mDraftlist.clear();
+                    }
+                    BasicInfo.mDraftNumber = jsonArray.length();
+                    BasicInfo.mDraftlist = new LinkedList<>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
+                        String title = subJsonObject.getString("title");
+                        String text = subJsonObject.getString("text");
+                        PostInfo post = new PostInfo(BasicInfo.mName,BasicInfo.mAvatarUrl,title, text);
+                        BasicInfo.mDraftlist.add(post);
                     }
                 }
             } catch (Exception e) {
@@ -351,12 +472,19 @@ public class LoginActivity extends BaseActivity {
         new getFollowedList(this.handleFollowedList, mId).send();
         // 填充消息列表
         new getNoticeList(this.handleNoticeList,mId).send();
+        // 填充动态列表
+        new getAllpost(this.handleAllpostList,"20").send();
+        // 填充草稿箱
+        new getDraftList(this.handleDraftList,mId).send();
         // 填充我的动态列表
         new getMypost(this.handleMypostList,mId).send();
+        // 填充被屏蔽用户列表
+        new getBlockList(getBlockListCallback,mId).send();
         
         int count = 0;
         new GetFanlistRequest(getFollowListCallback, mId).send();
         new GetWatchlistRequest(getWatchListCallback, mId).send();
+
     }
 
     private synchronized void addCounter() {

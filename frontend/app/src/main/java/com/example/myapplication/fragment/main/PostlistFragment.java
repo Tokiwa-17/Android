@@ -68,11 +68,9 @@ public class PostlistFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_postlist, container, false);
-        if(BasicInfo.mNoticeList != null){
+        if(BasicInfo.mMypost != null){
             RecyclerView mRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerview);
             MypostAdapter mAdapter = new MypostAdapter(getActivity(), BasicInfo.mMypost);
-            if(mAdapter.getItemCount() != 0){
-                Log.e("BBBBBB", "123456");};
             mRecyclerView.setAdapter(mAdapter);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         }

@@ -26,11 +26,18 @@ public class BasicInfo {
 
     public static List<ShortProfile> WATCH_LIST = Collections.synchronizedList(new ArrayList<>());
     public static List<ShortProfile> FAN_LIST = Collections.synchronizedList(new ArrayList<>());
+    public static List<ShortProfile> BLOCK_LIST = Collections.synchronizedList(new ArrayList<>());
 
     public static List<NoticeInfo> mNoticeList;
     public static int mNoticeNumber;
     public static List<PostInfo> mMypost;
     public static int mMypostNumber;
+    public static List<PostInfo> mDraftlist;
+    public static int mDraftNumber;
+    public static List<PostInfo> mPostList;
+    public static int mPostNumber;
+    public static List<PostInfo> mTargetpost;
+    public static int mTargetpostNumber;
 
     public static Lock lock = new ReentrantLock();
 
@@ -48,5 +55,21 @@ public class BasicInfo {
     public static void addToWatchList(ShortProfile shortProfile) {
         shortProfile.isFan = true;
         WATCH_LIST.add(shortProfile);
+    }
+
+    public static void removeFromBlockList(String id) {
+        lock.lock();
+        int i = 0;
+        for (ShortProfile shortProfile : BLOCK_LIST) {
+            if (shortProfile.id.equals(id)) break;
+            i++;
+        }
+        if (i < BLOCK_LIST.size()) BLOCK_LIST.remove(i);
+        lock.unlock();
+    }
+
+    public static void addToBlockList(ShortProfile shortProfile) {
+        shortProfile.isBlock = true;
+        BLOCK_LIST.add(shortProfile);
     }
 }
