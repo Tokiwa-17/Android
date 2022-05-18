@@ -3,12 +3,16 @@ package com.example.myapplication.fragment.main;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.myapplication.R;
+import com.example.myapplication.adapter.MypostAdapter;
+import com.example.myapplication.utils.BasicInfo;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +65,13 @@ public class DraftFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_draft, container, false);
+        View root = inflater.inflate(R.layout.fragment_draft, container, false);
+        if(BasicInfo.mDraftlist != null){
+            RecyclerView mRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerview);
+            MypostAdapter mAdapter = new MypostAdapter(getActivity(), BasicInfo.mDraftlist);
+            mRecyclerView.setAdapter(mAdapter);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+        }
+        return root;
     }
 }
