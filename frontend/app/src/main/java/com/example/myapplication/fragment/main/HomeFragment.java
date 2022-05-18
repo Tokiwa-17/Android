@@ -7,8 +7,22 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.myapplication.R;
+import com.luck.picture.lib.adapter.PictureImageGridAdapter;
+import com.luck.picture.lib.basic.PictureSelector;
+import com.luck.picture.lib.config.SelectMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.interfaces.OnResultCallbackListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +30,19 @@ import com.example.myapplication.R;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
+
+    Unbinder unbinder;
+
+    @BindView(R.id.upload_btn)
+    Button uploadBtn;
+
+    // fragment中添加成员变量
+    int aspect_ratio_x = 0;
+    int aspect_ratio_y = 0;
+    private int maxSelectNum = 6;
+    private List<LocalMedia> selectList = new ArrayList<>();
+    private PictureImageGridAdapter adapter;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +88,27 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View root =  inflater.inflate(R.layout.fragment_home, container, false);
+        unbinder = ButterKnife.bind(this, root);
+
+        uploadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                PictureSelector.create(this)
+//                    .openSystemGallery(SelectMimeType.ofImage())
+//                    .forResult(new OnResultCallbackListener<LocalMedia>() {
+//                        @Override
+//                        public void onResult(ArrayList<LocalMedia> result) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onCancel() {
+//
+//                        }
+//                    });
+            }
+        });
+        return root;
     }
 }
