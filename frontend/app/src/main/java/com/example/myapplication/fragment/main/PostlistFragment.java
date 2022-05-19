@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.MypostAdapter;
 import com.example.myapplication.adapter.NotificationAdapter;
+import com.example.myapplication.adapter.ShortProfileAdapter;
 import com.example.myapplication.utils.BasicInfo;
 
 /**
@@ -31,6 +32,7 @@ public class PostlistFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    protected MypostAdapter mypostAdapter;
 
     public PostlistFragment() {
         // Required empty public constructor
@@ -70,9 +72,12 @@ public class PostlistFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_postlist, container, false);
         if(BasicInfo.mMypost != null){
             RecyclerView mRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerview);
-            MypostAdapter mAdapter = new MypostAdapter(getActivity(), BasicInfo.mMypost);
-            mRecyclerView.setAdapter(mAdapter);
+//            MypostAdapter mAdapter = new MypostAdapter(getActivity(), BasicInfo.mMypost);
+//            mRecyclerView.setAdapter(mAdapter);
+            mypostAdapter = new MypostAdapter(BasicInfo.mMypost,getContext());
+            mypostAdapter.setRecyclerManager(mRecyclerView);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+
         }
         return root;
     }

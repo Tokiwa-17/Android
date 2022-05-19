@@ -21,6 +21,10 @@
     <string name="title_conversations">会话</string>
     <string name="title_follow">关注</string>
 
+    <!--搜索-->
+    <string name="HOT_SEARCH">热门搜索</string>
+    <string name="HISTORY_SEARCH">搜索历史</string>
+
     <!--我的-->
     <string name="edit_user_info">编辑个人信息</string>
 
