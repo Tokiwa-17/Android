@@ -59,3 +59,23 @@ def get_allpost():
             print(f'text: {text}')
             post_list.append({'name': name, 'avatar_url': avatar_url, 'title': title, 'text': text})
     return {'all_post_list': post_list}, 200
+
+
+@post.route('/api/post/get_query', methods=['GET', 'POST'])  # 前端向后端数据库发送数据
+def get_query():
+    query = request.args.get('query')
+    print(f'query: {query}')
+    post_list = []
+    post_query = Post.query.filter(Post.title == query)
+    if post_query != None:
+        i = 0
+        for post in post_query:
+            title = post.title
+            text = post.text
+            user_id = post.user_id
+            user = User.query.filter(User.id == user_id).first()
+            name = user.nickname
+            avatar_url = user.avatar
+            print(f'text: {text}')
+            post_list.append({'name': name, 'avatar_url': avatar_url, 'title': title, 'text': text})
+    return {'result_list': post_list}, 200

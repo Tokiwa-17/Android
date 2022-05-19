@@ -30,6 +30,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
+            android:name=".activity.QueryResultActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.QueryActivity"
             android:exported="false" />
         <activity
