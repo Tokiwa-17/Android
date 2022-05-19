@@ -120,7 +120,7 @@ public class VisitHomePageActivity extends AppCompatActivity {
             RecyclerView mRecyclerView = (RecyclerView) this.findViewById(R.id.recyclerview);
 //            MypostAdapter mAdapter = new MypostAdapter(this, BasicInfo.mTargetpost);
 //            mRecyclerView.setAdapter(mAdapter);
-            mypostAdapter = new MypostAdapter(BasicInfo.mPostList,this);
+            mypostAdapter = new MypostAdapter(BasicInfo.mTargetpost,this);
             mypostAdapter.setRecyclerManager(mRecyclerView);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         }
