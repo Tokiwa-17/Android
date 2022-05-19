@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment {
 
 
     Unbinder unbinder;
-    
+
     // fragment中添加成员变量
     int aspect_ratio_x = 0;
     int aspect_ratio_y = 0;
