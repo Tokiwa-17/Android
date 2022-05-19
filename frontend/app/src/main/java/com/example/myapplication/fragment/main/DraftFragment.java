@@ -29,6 +29,7 @@ public class DraftFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    protected MypostAdapter mypostAdapter;
 
     public DraftFragment() {
         // Required empty public constructor
@@ -68,8 +69,10 @@ public class DraftFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_draft, container, false);
         if(BasicInfo.mDraftlist != null){
             RecyclerView mRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerview);
-            MypostAdapter mAdapter = new MypostAdapter(getActivity(), BasicInfo.mDraftlist);
-            mRecyclerView.setAdapter(mAdapter);
+//            MypostAdapter mAdapter = new MypostAdapter(getActivity(), BasicInfo.mDraftlist);
+//            mRecyclerView.setAdapter(mAdapter);
+            mypostAdapter = new MypostAdapter(BasicInfo.mDraftlist,getContext());
+            mypostAdapter.setRecyclerManager(mRecyclerView);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         }
         return root;

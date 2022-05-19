@@ -1,5 +1,6 @@
 package com.example.myapplication.fragment.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,14 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.example.myapplication.R;
 
-import com.luck.picture.lib.adapter.PictureImageGridAdapter;
-import com.luck.picture.lib.basic.PictureSelector;
-import com.luck.picture.lib.config.SelectMimeType;
-import com.luck.picture.lib.entity.LocalMedia;
-import com.luck.picture.lib.interfaces.OnResultCallbackListener;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +25,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import com.example.myapplication.activity.EditInfoActivity;
 import com.example.myapplication.adapter.MypostAdapter;
 import com.example.myapplication.utils.BasicInfo;
+import com.example.myapplication.utils.MyImageLoader;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,17 +38,16 @@ import com.example.myapplication.utils.BasicInfo;
  */
 public class HomeFragment extends Fragment {
 
-    Unbinder unbinder;
+    ImageView imgAvatar;
+    EditText searchView;
 
-    @BindView(R.id.upload_btn)
-    Button uploadBtn;
+    Unbinder unbinder;
 
     // fragment中添加成员变量
     int aspect_ratio_x = 0;
     int aspect_ratio_y = 0;
     private int maxSelectNum = 6;
-    private List<LocalMedia> selectList = new ArrayList<>();
-    private PictureImageGridAdapter adapter;
+
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -57,6 +58,7 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    protected MypostAdapter mypostAdapter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -94,10 +96,23 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        imgAvatar = root.findViewById(R.id.imageButton);
+        MyImageLoader.loadImage(imgAvatar, BasicInfo.mAvatarUrl);
+        searchView = root.findViewById(R.id.search_view);
+        searchView.setFocusable(false);
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), EditInfoActivity.class);
+                startActivity(intent);
+            }
+        });
         if(BasicInfo.mMypost != null){
             RecyclerView mRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerview);
-            MypostAdapter mAdapter = new MypostAdapter(getActivity(), BasicInfo.mPostList);
-            mRecyclerView.setAdapter(mAdapter);
+//            MypostAdapter mAdapter = new MypostAdapter(getActivity(), BasicInfo.mPostList);
+//            mRecyclerView.setAdapter(mAdapter);
+            mypostAdapter = new MypostAdapter(BasicInfo.mPostList,getContext());
+            mypostAdapter.setRecyclerManager(mRecyclerView);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         }
         return root;
