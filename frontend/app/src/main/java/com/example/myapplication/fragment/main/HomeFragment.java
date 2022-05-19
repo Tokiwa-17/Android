@@ -27,6 +27,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import com.example.myapplication.activity.EditInfoActivity;
+import com.example.myapplication.activity.QueryActivity;
 import com.example.myapplication.adapter.MypostAdapter;
 import com.example.myapplication.utils.BasicInfo;
 import com.example.myapplication.utils.MyImageLoader;
@@ -103,7 +104,7 @@ public class HomeFragment extends Fragment {
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), EditInfoActivity.class);
+                Intent intent = new Intent(getActivity(), QueryActivity.class);
                 startActivity(intent);
             }
         });
