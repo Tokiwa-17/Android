@@ -48,7 +48,7 @@ public class NotificationFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private NotificationAdapter mAdapter;
+    private NotificationAdapter notificationAdapter;
     private int position;
 
     public NotificationFragment() {
@@ -89,8 +89,8 @@ public class NotificationFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_notification, container, false);
         if(BasicInfo.mNoticeList != null){
             mRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerview);
-            mAdapter = new NotificationAdapter(getActivity(), BasicInfo.mNoticeList);
-            mRecyclerView.setAdapter(mAdapter);
+            notificationAdapter = new NotificationAdapter(BasicInfo.mNoticeList, getContext());
+            notificationAdapter.setRecyclerManager(mRecyclerView);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         }
 

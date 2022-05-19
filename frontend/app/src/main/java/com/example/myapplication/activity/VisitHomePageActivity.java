@@ -70,6 +70,7 @@ public class VisitHomePageActivity extends AppCompatActivity {
     public String mId;
     public boolean isFan;
     public boolean isBlock;
+    protected MypostAdapter mypostAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,8 +118,10 @@ public class VisitHomePageActivity extends AppCompatActivity {
         //加载动态信息
         if(BasicInfo.mTargetpost != null){
             RecyclerView mRecyclerView = (RecyclerView) this.findViewById(R.id.recyclerview);
-            MypostAdapter mAdapter = new MypostAdapter(this, BasicInfo.mTargetpost);
-            mRecyclerView.setAdapter(mAdapter);
+//            MypostAdapter mAdapter = new MypostAdapter(this, BasicInfo.mTargetpost);
+//            mRecyclerView.setAdapter(mAdapter);
+            mypostAdapter = new MypostAdapter(BasicInfo.mPostList,this);
+            mypostAdapter.setRecyclerManager(mRecyclerView);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         }
 
