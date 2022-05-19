@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+from sqlalchemy import or_
 
 from ..user.models import User
 from .models import Post
@@ -66,7 +67,7 @@ def get_query():
     query = request.args.get('query')
     print(f'query: {query}')
     post_list = []
-    post_query = Post.query.filter(Post.title == query)
+    post_query = Post.query.filter(or_(Post.title.like("%{}%".format(query)), Post.text.like("%{}%".format(query))))
     if post_query != None:
         i = 0
         for post in post_query:
