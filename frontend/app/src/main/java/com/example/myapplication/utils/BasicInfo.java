@@ -36,6 +36,8 @@ public class BasicInfo {
     public static int mDraftNumber;
     public static List<PostInfo> mPostList;
     public static int mPostNumber;
+    public static List<PostInfo> mResultPostList;
+    public static int mResultPostNumber;
     public static List<PostInfo> mTargetpost;
     public static int mTargetpostNumber;
 
