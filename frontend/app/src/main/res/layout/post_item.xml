@@ -62,14 +62,26 @@
     </LinearLayout>
 
 
-    <ImageButton
+<!--    <ImageButton-->
+<!--        android:id="@+id/upvote_btn"-->
+<!--        android:layout_width="20dp"-->
+<!--        android:layout_height="20dp"-->
+<!--        android:layout_marginTop="2dp"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:layout_marginBottom="2dp"-->
+<!--        android:background="@drawable/upvote_press"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"/>-->
+
+    <com.example.myapplication.myView.UpvoteButton
         android:id="@+id/upvote_btn"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="2dp"
-        android:background="@drawable/ic_upvote_before"
+        android:background="@drawable/upvote_press"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
