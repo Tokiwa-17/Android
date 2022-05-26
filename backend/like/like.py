@@ -1,6 +1,8 @@
 from flask import Blueprint, request, jsonify
 from .models import Like
+from ..user.models import User
 from ..db import db
+import json
 
 
 like = Blueprint('like', __name__)
@@ -17,4 +19,21 @@ def test_url2():
     db.session.add(new_like)
     db.session.commit()
     return "OK", 200
+
+@like.route('/api/like/get_upvote', methods=['GET', 'POST'])
+def get_upvote():
+    id_list = request.args.get('post_id_list').strip()
+    upvote_list = []
+    try:
+        id_list = id_list.split(' ')
+        for id in id_list:
+            like_item = Like.query.filter(Like.post_id == id)
+
+            for user in like_item:
+                user_name = User.query.filter(User.id == user.user_id).first().nickname
+                upvote_list.append({"post_id": id, "user_name": user_name})
+    except:
+        pass
+    print(upvote_list)
+    return {"upvote_list" : upvote_list}, 200
 

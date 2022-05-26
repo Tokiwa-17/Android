@@ -469,19 +469,50 @@ public class LoginActivity extends BaseActivity {
                         Log.e("HttpResponse", responseBodyString);
                     }
                     JSONObject jsonObject = new JSONObject(responseBodyString);
-                    JSONArray jsonArray = (JSONArray) jsonObject.get("draft_list");
-                    if(BasicInfo.mDraftlist != null) {
-                        BasicInfo.mDraftlist.clear();
+                    JSONArray jsonArray = (JSONArray) jsonObject.get("upvote_list");
+//                    if(BasicInfo.mDraftlist != null) {
+//                        BasicInfo.mDraftlist.clear();
+//                    }
+//                    BasicInfo.mDraftNumber = jsonArray.length();
+//                    BasicInfo.mDraftlist = new LinkedList<>();
+//                    for (int i = 0; i < jsonArray.length(); i++) {
+//                        JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
+//                        String title = subJsonObject.getString("title");
+//                        String text = subJsonObject.getString("text");
+//                        PostInfo post = new PostInfo(BasicInfo.mName,BasicInfo.mAvatarUrl,title, text);
+//                        BasicInfo.mDraftlist.add(post);
+//                    }
+                }
+            } catch (Exception e) {
+                if (Global.HTTP_DEBUG_MODE)
+                    Log.e("HttpResponse", e.toString());
+            }
+        }
+
+        @Override
+        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+//            LoginActivity.this.runOnUiThread(() -> Hint.endActivityLoad(LoginActivity.this));
+//            LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "登录失败..."));
+            if (Global.HTTP_DEBUG_MODE)
+                Log.e("HttpError", e.toString());
+        }
+    };
+
+    private okhttp3.Callback handlePostListID = new okhttp3.Callback() {
+        @Override
+        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            try {
+                if (response.code() != 200) {
+                    //LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "获取关注列表失败..."));
+                } else {
+                    ResponseBody responseBody = response.body();
+                    String responseBodyString = responseBody != null ? responseBody.string() : "";
+                    if (Global.HTTP_DEBUG_MODE) {
+                        Log.e("HttpResponse", responseBodyString);
                     }
-                    BasicInfo.mDraftNumber = jsonArray.length();
-                    BasicInfo.mDraftlist = new LinkedList<>();
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
-                        String title = subJsonObject.getString("title");
-                        String text = subJsonObject.getString("text");
-                        PostInfo post = new PostInfo(BasicInfo.mName,BasicInfo.mAvatarUrl,title, text);
-                        BasicInfo.mDraftlist.add(post);
-                    }
+                    JSONObject jsonObject = new JSONObject(responseBodyString);
+                    BasicInfo.mPostListID = (String)jsonObject.get("all_post_id_list");
+
                 }
             } catch (Exception e) {
                 if (Global.HTTP_DEBUG_MODE)
@@ -525,8 +556,8 @@ public class LoginActivity extends BaseActivity {
         // 填充被屏蔽用户列表
         new getBlockList(getBlockListCallback,mId).send();
         // 填充点赞列表
-        //new getPostListID(handlePostListID, mId).send();
-        //new getUpvote(this.handleUpvoteList, ).send();
+        new getPostListID(handlePostListID, "20").send();
+        //new getUpvote(this.handleUpvoteList, BasicInfo.mPostListID).send();
         
         int count = 0;
         new GetFanlistRequest(getFollowListCallback, mId).send();

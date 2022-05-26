@@ -80,3 +80,17 @@ def get_query():
             print(f'text: {text}')
             post_list.append({'name': name, 'avatar_url': avatar_url, 'title': title, 'text': text})
     return {'result_list': post_list}, 200
+
+@post.route('/api/post/get_post_list_id', methods=['GET', 'POST'])
+def get_post_list_id():
+    num = request.args.get('num')
+    print(f'num: {num}')
+    post_list = ""
+    post_query = Post.query.order_by(Post.time).all()
+    if post_query != None:
+        i = 0
+        for post in post_query:
+            id = post.post_id
+            # print(f'text: {text}')
+            post_list = post_list + id + " "
+    return {'all_post_id_list': post_list}, 200
