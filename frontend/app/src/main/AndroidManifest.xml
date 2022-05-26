@@ -48,7 +48,7 @@
         <activity
             android:name=".activity.FullyGridLayoutManager"
             android:exported="true"
-             />
+            />
         <activity
             android:name=".activity.VisitHomePageActivity"
             android:exported="false" />
