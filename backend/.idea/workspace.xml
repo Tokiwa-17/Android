@@ -4,6 +4,7 @@
     <list default="true" id="e0588ba3-920f-412f-bbc7-f1802957728d" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/request/post/getWatchpost.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/post/post.py" beforeDir="false" afterPath="$PROJECT_DIR$/post/post.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/activity/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/activity/LoginActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/activity/QueryActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/activity/QueryActivity.java" afterDir="false" />
@@ -3501,7 +3502,7 @@
       <workItem from="1652263797396" duration="6073000" />
       <workItem from="1652441407037" duration="14196000" />
       <workItem from="1652614744988" duration="5631000" />
-      <workItem from="1652944540077" duration="8197000" />
+      <workItem from="1652944540077" duration="8512000" />
     </task>
     <servers />
   </component>
