@@ -122,7 +122,7 @@ public class MypostAdapter<T> extends MyBaseListAdapter {
     private ImageButton mButton;
 
     public MypostAdapter(List<T> data, Context context) {
-        super(R.layout.post_item, data, context);
+        super(R.layout.my_post_item, data, context);
     }
 
     @Override

@@ -28,6 +28,8 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import com.example.myapplication.activity.EditInfoActivity;
+import com.example.myapplication.activity.GeneralPostAdapter;
+import com.example.myapplication.activity.PostDetailActivity;
 import com.example.myapplication.activity.QueryActivity;
 import com.example.myapplication.adapter.MypostAdapter;
 import com.example.myapplication.myView.UpvoteButton;
@@ -62,7 +64,7 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    protected MypostAdapter mypostAdapter;
+    protected GeneralPostAdapter mypostAdapter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -115,7 +117,7 @@ public class HomeFragment extends Fragment {
             RecyclerView mRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerview);
 //            MypostAdapter mAdapter = new MypostAdapter(getActivity(), BasicInfo.mPostList);
 //            mRecyclerView.setAdapter(mAdapter);
-            mypostAdapter = new MypostAdapter(BasicInfo.mPostList,getContext());
+            mypostAdapter = new GeneralPostAdapter(BasicInfo.mPostList,getContext());
             mypostAdapter.setRecyclerManager(mRecyclerView);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         }
@@ -130,9 +132,12 @@ public class HomeFragment extends Fragment {
 
     public void visitHomePage(int position) {
 
+
+        Intent intent = new Intent(getContext(), PostDetailActivity.class);
+        startActivity(intent);
     }
 
-    private void addButtonListener(MypostAdapter mypostAdapter) {
+    private void addButtonListener(GeneralPostAdapter mypostAdapter) {
         mypostAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             try {
                 UpvoteButton btn = ((UpvoteButton) view);
