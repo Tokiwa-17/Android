@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.myapplication.R;
+import android.util.Log;
 
 
 
@@ -29,6 +30,7 @@ import butterknife.Unbinder;
 import com.example.myapplication.activity.EditInfoActivity;
 import com.example.myapplication.activity.QueryActivity;
 import com.example.myapplication.adapter.MypostAdapter;
+import com.example.myapplication.myView.UpvoteButton;
 import com.example.myapplication.utils.BasicInfo;
 import com.example.myapplication.utils.MyImageLoader;
 
@@ -117,6 +119,29 @@ public class HomeFragment extends Fragment {
             mypostAdapter.setRecyclerManager(mRecyclerView);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         }
+        mypostAdapter.setOnItemClickListener((adapter, view, position) -> {
+            visitHomePage(position);
+        });
+
+        addButtonListener(mypostAdapter);
+
         return root;
+    }
+
+    public void visitHomePage(int position) {
+
+    }
+
+    private void addButtonListener(MypostAdapter mypostAdapter) {
+        mypostAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            try {
+                UpvoteButton btn = ((UpvoteButton) view);
+                btn.startLoading(() -> {
+                    Log.e("TTTTTTTTTTT", "TTTTTTTT");
+                });
+            } catch (Exception e) {
+
+            }
+        });
     }
 }

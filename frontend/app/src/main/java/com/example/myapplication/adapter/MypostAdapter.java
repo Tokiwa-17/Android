@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -118,6 +119,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 //}
 public class MypostAdapter<T> extends MyBaseListAdapter {
     private CircleImageView mHead;
+    private ImageButton mButton;
 
     public MypostAdapter(List<T> data, Context context) {
         super(R.layout.post_item, data, context);
@@ -138,6 +140,7 @@ public class MypostAdapter<T> extends MyBaseListAdapter {
         } catch (Exception e) {
 
         }
+        mButton = viewHolder.getView(R.id.upvote_btn);
     }
 
     @Override
