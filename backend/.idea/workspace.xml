@@ -2,13 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e0588ba3-920f-412f-bbc7-f1802957728d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/request/post/getWatchpost.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/like/like.py" beforeDir="false" afterPath="$PROJECT_DIR$/like/like.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/post/post.py" beforeDir="false" afterPath="$PROJECT_DIR$/post/post.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/activity/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/activity/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/activity/QueryActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/activity/QueryActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/activity/QueryResultActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/activity/QueryResultActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/activity/VisitHomePageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/activity/VisitHomePageActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/adapter/MypostAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/adapter/MypostAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/entity/PostInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/entity/PostInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/fragment/main/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/fragment/main/HomeFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/request/post/getAllpost.java" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/request/post/getAllpost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/request/query/getQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/request/query/getQuery.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/utils/BasicInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/utils/BasicInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/app/src/main/res/layout/post_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/app/src/main/res/layout/post_item.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/app/src/main/res/layout/activity_query.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/app/src/main/res/layout/activity_query.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/app/src/main/res/layout/fragment_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/app/src/main/res/layout/fragment_home.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/app/src/main/res/values/arrays.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/app/src/main/res/values/arrays.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Pipfile" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Pipfile.lock" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../README.md" beforeDir="false" />
@@ -3492,7 +3501,7 @@
       <workItem from="1652263797396" duration="6073000" />
       <workItem from="1652441407037" duration="14196000" />
       <workItem from="1652614744988" duration="5631000" />
-      <workItem from="1652944540077" duration="7338000" />
+      <workItem from="1652944540077" duration="8197000" />
     </task>
     <servers />
   </component>

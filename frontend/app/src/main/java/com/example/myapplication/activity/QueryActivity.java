@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -24,6 +25,7 @@ import com.example.myapplication.R;
 //import com.gyf.immersionbar.ImmersionBar;
 import com.example.myapplication.adapter.HistoryListAdapter;
 import com.example.myapplication.entity.PostInfo;
+import com.example.myapplication.entity.ShortProfile;
 import com.example.myapplication.request.query.getQuery;
 import com.example.myapplication.utils.BasicInfo;
 import com.example.myapplication.utils.Global;
@@ -60,11 +62,16 @@ public class QueryActivity extends BaseActivity {
     @BindView(R.id.historyList)
     RecyclerView historyList;
 
+    @BindView(R.id.spinner)
+    Spinner query_type;
+
     private HistoryListAdapter historyListAdapter;
 
     private List<String> records;
 
     private List<String> hot;
+
+    private String type;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,8 +84,10 @@ public class QueryActivity extends BaseActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+                type = query_type.getSelectedItem().toString();
                 getQuery(s);
                 Intent intent = new Intent(getApplicationContext(), QueryResultActivity.class);
+                intent.putExtra("type", type);
                 intent.putExtra("query", s);
                 startActivity(intent);
                 QueryActivity.this.finish();
@@ -110,7 +119,7 @@ public class QueryActivity extends BaseActivity {
         });
         getSearchHistory();
 
-        toolbar.setNavigationOnClickListener(v -> this.finish());
+//        toolbar.setNavigationOnClickListener(v -> this.finish());
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
     }
@@ -187,21 +196,32 @@ public class QueryActivity extends BaseActivity {
                         }
                         JSONObject jsonObject = new JSONObject(responseBodyString);
                         JSONArray jsonArray = (JSONArray) jsonObject.get("result_list");
-                        if(BasicInfo.mResultPostList != null) {
-                            BasicInfo.mResultPostList.clear();
-                        }
-                        BasicInfo.mResultPostNumber = jsonArray.length();
-                        BasicInfo.mResultPostList = new LinkedList<>();
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
-                            String title = subJsonObject.getString("title");
-                            String text = subJsonObject.getString("text");
-                            String name = subJsonObject.getString("name");
-                            String avatar_url = subJsonObject.getString("avatar_url");
-                            PostInfo post = new PostInfo(name,avatar_url,title, text);
-                            BasicInfo.mResultPostList.add(post);
-                        }
 
+                        if(type.equals("用户名称")){
+                            if(BasicInfo.RESULT_LIST.isEmpty() == false) {
+                                BasicInfo.RESULT_LIST.clear();
+                            }
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                ShortProfile shortProfile = new ShortProfile(jsonArray.getJSONObject(i));
+                                BasicInfo.RESULT_LIST.add(shortProfile);
+                            }
+                        }
+                        else{
+                            if(BasicInfo.mResultPostList != null) {
+                                BasicInfo.mResultPostList.clear();
+                            }
+                            BasicInfo.mResultPostNumber = jsonArray.length();
+                            BasicInfo.mResultPostList = new LinkedList<>();
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
+                                String title = subJsonObject.getString("title");
+                                String text = subJsonObject.getString("text");
+                                String name = subJsonObject.getString("name");
+                                String avatar_url = subJsonObject.getString("avatar_url");
+                                PostInfo post = new PostInfo(name,avatar_url,title, text);
+                                BasicInfo.mResultPostList.add(post);
+                            }
+                        }
                     }
                 }
                 catch (Exception e) {
@@ -209,7 +229,7 @@ public class QueryActivity extends BaseActivity {
                         Log.e("HttpResponse", e.toString());
                 }
             }
-        }, query).send();
+        },type,  query).send();
     }
 
 }
