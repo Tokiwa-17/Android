@@ -4,10 +4,10 @@ import com.example.myapplication.request.base.BaseGetRequest;
 
 import okhttp3.Callback;
 
-public class getAllpost extends BaseGetRequest {
-    public getAllpost(Callback callback,String mId,  String num) {
+public class getWatchpost extends BaseGetRequest {
+    public getWatchpost(Callback callback, String mId, String num) {
         // 设置请求URL
-        this.to("/api/post/get_allpost");
+        this.to("/api/post/get_watchpost");
         // 设置请求参数
         this.put("num", num);
         this.put("id", mId);
