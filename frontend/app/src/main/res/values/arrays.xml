@@ -5,4 +5,11 @@
         <item name="student">学生</item>
     </string-array>
 
+    <string-array name="query_type">
+        <item>动态名称</item>
+        <item>动态内容</item>
+        <item>用户名称</item>
+        <item>作品类型</item>
+    </string-array>
+
 </resources>

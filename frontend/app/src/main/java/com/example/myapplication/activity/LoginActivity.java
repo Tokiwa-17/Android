@@ -35,6 +35,7 @@ import com.example.myapplication.request.follow.getFollowedList;
 import com.example.myapplication.request.notification.getNoticeList;
 import com.example.myapplication.request.post.getAllpost;
 import com.example.myapplication.request.post.getMypost;
+import com.example.myapplication.request.post.getWatchpost;
 import com.example.myapplication.request.user.LoginRequest;
 import com.example.myapplication.utils.BasicInfo;
 import com.example.myapplication.utils.Global;
@@ -393,8 +394,60 @@ public class LoginActivity extends BaseActivity {
                         String text = subJsonObject.getString("text");
                         String name = subJsonObject.getString("name");
                         String avatar_url = subJsonObject.getString("avatar_url");
-                        PostInfo post = new PostInfo(name,avatar_url,title, text);
+                        int like = subJsonObject.getInt("like");
+                        String time = subJsonObject.getString("time");
+                        String postId = subJsonObject.getString("postId");
+                        String userId = subJsonObject.getString("userId");
+                        PostInfo post = new PostInfo(postId, userId, name,avatar_url,title, text,like,time);
                         BasicInfo.mPostList.add(post);
+                    }
+                }
+            } catch (Exception e) {
+                if (Global.HTTP_DEBUG_MODE)
+                    Log.e("HttpResponse", e.toString());
+            }
+        }
+
+        @Override
+        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+//            LoginActivity.this.runOnUiThread(() -> Hint.endActivityLoad(LoginActivity.this));
+//            LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "登录失败..."));
+            if (Global.HTTP_DEBUG_MODE)
+                Log.e("HttpError", e.toString());
+        }
+    };
+
+    private okhttp3.Callback handleWatchpostList = new okhttp3.Callback() {
+        @Override
+        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            try {
+                if (response.code() != 200) {
+                    //LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "获取关注列表失败..."));
+                } else {
+                    ResponseBody responseBody = response.body();
+                    String responseBodyString = responseBody != null ? responseBody.string() : "";
+                    if (Global.HTTP_DEBUG_MODE) {
+                        Log.e("HttpResponse", responseBodyString);
+                    }
+                    JSONObject jsonObject = new JSONObject(responseBodyString);
+                    JSONArray jsonArray = (JSONArray) jsonObject.get("watch_post_list");
+                    if(BasicInfo.mWatchPost != null) {
+                        BasicInfo.mWatchPost.clear();
+                    }
+                    BasicInfo.mWatchPostNumber = jsonArray.length();
+                    BasicInfo.mWatchPost = new LinkedList<>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
+                        String title = subJsonObject.getString("title");
+                        String text = subJsonObject.getString("text");
+                        String name = subJsonObject.getString("name");
+                        String avatar_url = subJsonObject.getString("avatar_url");
+                        int like = subJsonObject.getInt("like");
+                        String time = subJsonObject.getString("time");
+                        String postId = subJsonObject.getString("postId");
+                        String userId = subJsonObject.getString("userId");
+                        PostInfo post = new PostInfo(postId, userId, name,avatar_url,title, text,like,time);
+                        BasicInfo.mWatchPost.add(post);
                     }
                 }
             } catch (Exception e) {
@@ -473,11 +526,13 @@ public class LoginActivity extends BaseActivity {
         // 填充消息列表
         new getNoticeList(this.handleNoticeList,mId).send();
         // 填充动态列表
-        new getAllpost(this.handleAllpostList,"20").send();
+        new getAllpost(this.handleAllpostList,mId,"20").send();
         // 填充草稿箱
         new getDraftList(this.handleDraftList,mId).send();
         // 填充我的动态列表
         new getMypost(this.handleMypostList,mId).send();
+        // 填充关注动态列表
+        new getWatchpost(this.handleWatchpostList, mId, "20").send();
         // 填充被屏蔽用户列表
         new getBlockList(getBlockListCallback,mId).send();
         

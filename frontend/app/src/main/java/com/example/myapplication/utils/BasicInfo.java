@@ -24,9 +24,11 @@ public class BasicInfo {
     public static List<UserInfo> mFollowedList;
     public static int mFollowedNumber;
 
+
     public static List<ShortProfile> WATCH_LIST = Collections.synchronizedList(new ArrayList<>());
     public static List<ShortProfile> FAN_LIST = Collections.synchronizedList(new ArrayList<>());
     public static List<ShortProfile> BLOCK_LIST = Collections.synchronizedList(new ArrayList<>());
+    public static List<ShortProfile> RESULT_LIST = Collections.synchronizedList(new ArrayList<>());
 
     public static List<NoticeInfo> mNoticeList;
     public static int mNoticeNumber;
@@ -36,6 +38,8 @@ public class BasicInfo {
     public static int mDraftNumber;
     public static List<PostInfo> mPostList;
     public static int mPostNumber;
+    public static List<PostInfo> mWatchPost;
+    public static int mWatchPostNumber;
     public static List<PostInfo> mResultPostList;
     public static int mResultPostNumber;
     public static List<PostInfo> mTargetpost;
