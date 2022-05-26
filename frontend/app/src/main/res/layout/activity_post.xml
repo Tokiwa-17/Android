@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".activity.PostActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarpost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:navigationIcon="@drawable/ic_navigate_before_black_24dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/confirm_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="15dp"
+                android:clickable="true"
+                android:text="发布"
+                android:textColor="@color/theme_blue"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.andreabaccega.widget.FormEditText
+                android:id="@+id/post_title"
+                android:layout_marginStart="10dp"
+                style="@style/personal_homepage_edit_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="请输入标题"
+                android:inputType="textShortMessage"
+                android:maxLines="1"
+                android:textColor="?android:attr/textColorSecondary"
+                app:emptyErrorString="@string/CANNOT_BE_NULL">
+
+        </com.andreabaccega.widget.FormEditText>
+
+        <View
+            android:id="@+id/sepline"
+            android:layout_centerInParent="true"
+            android:layout_width="380dp"
+            android:layout_height="1dp"
+            android:layout_below="@id/post_title"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/darker_gray"
+            android:visibility="visible"/>
+
+        <com.andreabaccega.widget.FormEditText
+            android:id="@+id/post_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            style="@style/personal_homepage_edit_style"
+            android:layout_below="@+id/sepline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="请输入正文"
+            android:inputType="textMultiLine"
+            android:maxLines="10"
+            android:textColor="?android:attr/textColorSecondary"
+            app:emptyErrorString="@string/CANNOT_BE_NULL">
+
+        </com.andreabaccega.widget.FormEditText>
+        <!--    picture review section -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:overScrollMode="never"
+            android:layout_below="@+id/post_content"/>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pictures"
+            android:clickable="true"
+            android:src="@drawable/ic_baseline_crop_original_24">
+        </ImageButton>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/video"
+            android:src="@drawable/ic_baseline_videocam_24"
+            >
+        </ImageButton>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/audio"
+            android:src="@drawable/ic_baseline_audiotrack_24">
+
+        </ImageButton>
+    </LinearLayout>
+</RelativeLayout>
