@@ -41,11 +41,11 @@
             android:exported="false" />
         <activity
             android:name=".activity.PostActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activity.FullyGridLayoutManager"
-            android:exported="false"
-            tools:ignore="Instantiatable" />
+            android:exported="true"
+             />
         <activity
             android:name=".activity.VisitHomePageActivity"
             android:exported="false" />
