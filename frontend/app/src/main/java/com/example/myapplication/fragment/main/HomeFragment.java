@@ -167,13 +167,13 @@ public class HomeFragment extends Fragment {
                     };
                     if (onlyWatch){
                         Collections.sort(BasicInfo.mWatchPost, comparator);
-                        mypostAdapter = new MypostAdapter(BasicInfo.mWatchPost,getContext());
+                        mypostAdapter = new GeneralPostAdapter(BasicInfo.mWatchPost,getContext());
                         mypostAdapter.setRecyclerManager(mRecyclerView);
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
                     }
                     else {
                         Collections.sort(BasicInfo.mPostList, comparator);
-                        mypostAdapter = new MypostAdapter(BasicInfo.mPostList,getContext());
+                        mypostAdapter = new GeneralPostAdapter(BasicInfo.mPostList,getContext());
                         mypostAdapter.setRecyclerManager(mRecyclerView);
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
 
@@ -197,13 +197,13 @@ public class HomeFragment extends Fragment {
 
                     if (onlyWatch){
                         Collections.sort(BasicInfo.mWatchPost, comparator);
-                        mypostAdapter = new MypostAdapter(BasicInfo.mWatchPost,getContext());
+                        mypostAdapter = new GeneralPostAdapter(BasicInfo.mWatchPost,getContext());
                         mypostAdapter.setRecyclerManager(mRecyclerView);
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
                     }
                     else {
                         Collections.sort(BasicInfo.mPostList, comparator);
-                        mypostAdapter = new MypostAdapter(BasicInfo.mPostList,getContext());
+                        mypostAdapter = new GeneralPostAdapter(BasicInfo.mPostList,getContext());
                         mypostAdapter.setRecyclerManager(mRecyclerView);
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
                     }
@@ -218,7 +218,7 @@ public class HomeFragment extends Fragment {
                     if (onlyWatch){
                         onlyWatch = false;
                         watchFilter.setTextColor(Color.GRAY);
-                        mypostAdapter = new MypostAdapter(BasicInfo.mPostList,getContext());
+                        mypostAdapter = new GeneralPostAdapter(BasicInfo.mPostList,getContext());
                         mypostAdapter.setRecyclerManager(mRecyclerView);
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
 
@@ -226,7 +226,7 @@ public class HomeFragment extends Fragment {
                     else {
                         onlyWatch = true;
                         watchFilter.setTextColor(Color.BLUE);
-                        mypostAdapter = new MypostAdapter(BasicInfo.mWatchPost,getContext());
+                        mypostAdapter = new GeneralPostAdapter(BasicInfo.mWatchPost,getContext());
                         mypostAdapter.setRecyclerManager(mRecyclerView);
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
 
