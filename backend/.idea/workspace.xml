@@ -3,10 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="e0588ba3-920f-412f-bbc7-f1802957728d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../../.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/fragment/main/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/app/src/main/java/com/example/myapplication/fragment/main/HomeFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Pipfile" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Pipfile.lock" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../c2python-compiler/src/test/test_preprocess.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../c2python-compiler/src/test/test_preprocess.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../c2python-compiler/src/test/test_preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../c2python-compiler/src/test/test_preprocess.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../node_modules/.bin/pbjs" beforeDir="false" />
@@ -3463,7 +3464,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../deit" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -3487,6 +3488,7 @@
       <workItem from="1652263797396" duration="6073000" />
       <workItem from="1652441407037" duration="14196000" />
       <workItem from="1652614744988" duration="5631000" />
+      <workItem from="1652944540077" duration="1010000" />
     </task>
     <servers />
   </component>

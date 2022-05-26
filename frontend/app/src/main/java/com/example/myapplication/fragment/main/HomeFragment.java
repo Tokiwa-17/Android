@@ -42,6 +42,7 @@ public class HomeFragment extends Fragment {
     ImageView imgAvatar;
     EditText searchView;
 
+
     Unbinder unbinder;
 
     // fragment中添加成员变量
