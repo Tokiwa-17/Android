@@ -43,6 +43,10 @@
     <style name="TabLayoutTextStyle">
         <item name="android:textSize">@dimen/text_size</item>
     </style>
-
+    <!--post imageview style-->
+    <style name="main_menu_photo_anim">
+        <item name="android:windowEnterAnimation">@anim/picture_dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/picture_dialog_out</item>
+    </style>
 
 </resources>
