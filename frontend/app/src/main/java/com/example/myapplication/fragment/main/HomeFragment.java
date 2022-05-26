@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
+import android.util.Log;
 
 
 import java.text.ParseException;
@@ -35,10 +36,13 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import com.example.myapplication.activity.EditInfoActivity;
+import com.example.myapplication.activity.GeneralPostAdapter;
+import com.example.myapplication.activity.PostDetailActivity;
 import com.example.myapplication.activity.QueryActivity;
 import com.example.myapplication.adapter.MypostAdapter;
 import com.example.myapplication.entity.PostInfo;
 import com.example.myapplication.entity.ShortProfile;
+import com.example.myapplication.myView.UpvoteButton;
 import com.example.myapplication.utils.BasicInfo;
 import com.example.myapplication.utils.MyImageLoader;
 
@@ -75,7 +79,7 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    protected MypostAdapter mypostAdapter;
+    protected GeneralPostAdapter mypostAdapter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -132,7 +136,7 @@ public class HomeFragment extends Fragment {
             RecyclerView mRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerview);
 //            MypostAdapter mAdapter = new MypostAdapter(getActivity(), BasicInfo.mPostList);
 //            mRecyclerView.setAdapter(mAdapter);
-            mypostAdapter = new MypostAdapter(BasicInfo.mPostList,getContext());
+            mypostAdapter = new GeneralPostAdapter(BasicInfo.mPostList,getContext());
             mypostAdapter.setRecyclerManager(mRecyclerView);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
 
@@ -231,8 +235,32 @@ public class HomeFragment extends Fragment {
                 }
             });
         }
+        mypostAdapter.setOnItemClickListener((adapter, view, position) -> {
+            visitHomePage(position);
+        });
+
+        addButtonListener(mypostAdapter);
+
         return root;
     }
 
+    public void visitHomePage(int position) {
+
+        Intent intent = new Intent(getContext(), PostDetailActivity.class);
+        startActivity(intent);
+    }
+
+    private void addButtonListener(GeneralPostAdapter mypostAdapter) {
+        mypostAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            try {
+                UpvoteButton btn = ((UpvoteButton) view);
+                btn.startLoading(() -> {
+                    Log.e("TTTTTTTTTTT", "TTTTTTTT");
+                });
+            } catch (Exception e) {
+
+            }
+        });
+    }
 
 }

@@ -1,40 +1,25 @@
-package com.example.myapplication.adapter;
+package com.example.myapplication.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.myapplication.R;
-import com.example.myapplication.entity.NoticeInfo;
+import com.example.myapplication.adapter.MyBaseListAdapter;
 import com.example.myapplication.entity.PostInfo;
-import com.example.myapplication.entity.ShortProfile;
-import com.example.myapplication.myView.FocusButton;
-import com.example.myapplication.utils.BasicInfo;
 import com.example.myapplication.utils.MyImageLoader;
 import com.example.myapplication.utils.StringCutter;
 
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.LinkedList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
-public class MypostAdapter<T> extends MyBaseListAdapter {
+public class GeneralPostAdapter<T> extends MyBaseListAdapter {
     private CircleImageView mHead;
     private ImageButton mButton;
 
-    public MypostAdapter(List<T> data, Context context) {
-        super(R.layout.my_post_item, data, context);
+    public GeneralPostAdapter(List<T> data, Context context) {
+        super(R.layout.post_item, data, context);
     }
 
     @Override

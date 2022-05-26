@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -98,5 +99,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void launchPostActivity(View view) {
+        Intent intent = new Intent(this, PostActivity.class);
+        startActivity(intent);
     }
 }

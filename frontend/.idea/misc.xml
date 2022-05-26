@@ -3,8 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Github/Android/frontend/app/src/main/res/drawable/ic_upvote_before.xml" value="0.13958333333333334" />
+        <entry key="..\:/Github/Android/frontend/app/src/main/res/drawable/upvote_press.xml" value="0.1421875" />
+        <entry key="..\:/Github/Android/frontend/app/src/main/res/layout/activity_post_detail.xml" value="0.1" />
         <entry key="..\:/Github/Android/frontend/app/src/main/res/layout/fragment_home.xml" value="0.25364583333333335" />
         <entry key="..\:/Github/Android/frontend/app/src/main/res/layout/layout_profile_row.xml" value="0.17300724637681159" />
+        <entry key="..\:/Github/Android/frontend/app/src/main/res/layout/my_post_item.xml" value="0.12708333333333333" />
         <entry key="..\:/Github/Android/frontend/app/src/main/res/layout/post_item.xml" value="0.17300724637681159" />
         <entry key="..\:/Github/android/frontend/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2651282051282051" />
         <entry key="..\:/Github/android/frontend/app/src/main/res/drawable/bg_login.xml" value="0.26614583333333336" />
@@ -33,6 +37,15 @@
         <entry key="..\:/Github/android/frontend/app/src/main/res/layout/fragment_notification.xml" value="0.1" />
         <entry key="..\:/Github/android/frontend/app/src/main/res/layout/layout_profile_row.xml" value="0.16" />
         <entry key="..\:/Github/android/frontend/app/src/main/res/menu/bottom_nav_menu.xml" value="0.4" />
+        <entry key="app/src/main/res/drawable-v24/ic_baseline_add_24.xml" value="0.2235" />
+        <entry key="app/src/main/res/drawable-v24/ic_baseline_audiotrack_24.xml" value="0.137" />
+        <entry key="app/src/main/res/drawable-v24/ic_baseline_delete_24.xml" value="0.2235" />
+        <entry key="app/src/main/res/drawable-v24/ic_baseline_videocam_24.xml" value="0.137" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1265625" />
+        <entry key="app/src/main/res/layout/activity_post.xml" value="0.182518115942029" />
+        <entry key="app/src/main/res/layout/dialog_picturefrom.xml" value="0.182518115942029" />
+        <entry key="app/src/main/res/layout/gv_filter_image.xml" value="0.182518115942029" />
+        <entry key="app/src/main/res/layout/image_view.xml" value="0.1265625" />
       </map>
     </option>
   </component>
