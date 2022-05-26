@@ -170,13 +170,18 @@ public class HomeFragment extends Fragment {
                         mypostAdapter = new GeneralPostAdapter(BasicInfo.mWatchPost,getContext());
                         mypostAdapter.setRecyclerManager(mRecyclerView);
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+                        mypostAdapter.setOnItemClickListener((adapter, view, position) -> {
+                            visitHomePage(position);
+                        });
                     }
                     else {
                         Collections.sort(BasicInfo.mPostList, comparator);
                         mypostAdapter = new GeneralPostAdapter(BasicInfo.mPostList,getContext());
                         mypostAdapter.setRecyclerManager(mRecyclerView);
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-
+                        mypostAdapter.setOnItemClickListener((adapter, view, position) -> {
+                            visitHomePage(position);
+                        });
                     }
 
                 }
@@ -200,12 +205,18 @@ public class HomeFragment extends Fragment {
                         mypostAdapter = new GeneralPostAdapter(BasicInfo.mWatchPost,getContext());
                         mypostAdapter.setRecyclerManager(mRecyclerView);
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+                        mypostAdapter.setOnItemClickListener((adapter, view, position) -> {
+                            visitHomePage(position);
+                        });
                     }
                     else {
                         Collections.sort(BasicInfo.mPostList, comparator);
                         mypostAdapter = new GeneralPostAdapter(BasicInfo.mPostList,getContext());
                         mypostAdapter.setRecyclerManager(mRecyclerView);
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+                        mypostAdapter.setOnItemClickListener((adapter, view, position) -> {
+                            visitHomePage(position);
+                        });
                     }
 
                 }
@@ -221,7 +232,9 @@ public class HomeFragment extends Fragment {
                         mypostAdapter = new GeneralPostAdapter(BasicInfo.mPostList,getContext());
                         mypostAdapter.setRecyclerManager(mRecyclerView);
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-
+                        mypostAdapter.setOnItemClickListener((adapter, view, position) -> {
+                            visitHomePage(position);
+                        });
                     }
                     else {
                         onlyWatch = true;
@@ -229,7 +242,9 @@ public class HomeFragment extends Fragment {
                         mypostAdapter = new GeneralPostAdapter(BasicInfo.mWatchPost,getContext());
                         mypostAdapter.setRecyclerManager(mRecyclerView);
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-
+                        mypostAdapter.setOnItemClickListener((adapter, view, position) -> {
+                            visitHomePage(position);
+                        });
                     }
 
                 }

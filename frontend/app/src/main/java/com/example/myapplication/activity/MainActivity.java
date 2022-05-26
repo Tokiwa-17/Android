@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 //                case R.id.navigation_conversations:
 //                    viewPager.setCurrentItem(2);
 //                    break;
-                case R.id.navigation_notifications:
+                case R.id.navigation_draft:
                     viewPager.setCurrentItem(2);
                     break;
                 case R.id.navigation_dashboard:
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 //                        navView.getMenu().findItem(R.id.navigation_conversations).setChecked(true);
 //                        break;
                     case 2:
-                        navView.getMenu().findItem(R.id.navigation_notifications).setChecked(true);
+                        navView.getMenu().findItem(R.id.navigation_draft).setChecked(true);
                         break;
                     default:
                         ((DashboardFragment) mMainActivityPagerAdapter.getRegisteredFragment(4)).changeFocus();
