@@ -30,7 +30,8 @@ public class GeneralPostAdapter<T> extends MyBaseListAdapter {
         PostInfo data = (PostInfo) o;
         viewHolder.setText(R.id.nickname, data.nickname)
                 .setText(R.id.title, StringCutter.cutter(data.title, 15))
-                .setText(R.id.text, data.text);
+                .setText(R.id.text, data.text)
+                .setText(R.id.like_list, data.likeName);
         try {
             mHead = viewHolder.getView(R.id.avatar_image);
             MyImageLoader.loadImage(mHead, data.avatarUrl);

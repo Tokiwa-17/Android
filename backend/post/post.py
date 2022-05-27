@@ -4,6 +4,7 @@ from sqlalchemy import or_
 from ..block.models import Block
 from ..follow.models import Follow
 from ..user.models import User
+from ..like.models import Like
 from .models import Post
 from ..db import db
 
@@ -183,10 +184,22 @@ def get_post_list_id():
     print(f'num: {num}')
     post_list = ""
     post_query = Post.query.order_by(Post.time).all()
+    upvote_list = []
     if post_query != None:
         i = 0
         for post in post_query:
             id = post.post_id
-            # print(f'text: {text}')
             post_list = post_list + id + " "
-    return {'all_post_id_list': post_list}, 200
+    try:
+        id_list = post_list.strip()
+        id_list = id_list.split(' ')
+        for id in id_list:
+            like_item = Like.query.filter(Like.post_id == id)
+
+            for user in like_item:
+                user_name = User.query.filter(User.id == user.user_id).first().nickname
+                upvote_list.append({"post_id": id, "user_name": user_name})
+    except:
+        pass
+    print(upvote_list)
+    return {"upvote_list": upvote_list}, 200
