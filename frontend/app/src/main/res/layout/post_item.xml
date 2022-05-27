@@ -114,6 +114,7 @@
                 android:layout_height="20dp"/>
 
             <TextView
+                android:id="@+id/like_list"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"/>
 

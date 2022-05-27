@@ -523,6 +523,14 @@ public class LoginActivity extends BaseActivity {
                     }
                     JSONObject jsonObject = new JSONObject(responseBodyString);
                     JSONArray jsonArray = (JSONArray) jsonObject.get("upvote_list");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
+                        String postId = subJsonObject.getString("post_id");
+                        String userName = subJsonObject.getString("user_name");
+                        for (int j = 0; j < BasicInfo.mPostList.size(); j++) {
+
+                        }
+                    }
 //                    if(BasicInfo.mDraftlist != null) {
 //                        BasicInfo.mDraftlist.clear();
 //                    }
@@ -564,8 +572,20 @@ public class LoginActivity extends BaseActivity {
                         Log.e("HttpResponse", responseBodyString);
                     }
                     JSONObject jsonObject = new JSONObject(responseBodyString);
-                    BasicInfo.mPostListID = (String)jsonObject.get("all_post_id_list");
-
+                    JSONArray jsonArray = (JSONArray) jsonObject.get("upvote_list");
+                    for (int j = 0; j < BasicInfo.mPostList.size(); j++) {
+                        BasicInfo.mPostList.get(j).likeName = "";
+                    }
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
+                        String postId = subJsonObject.getString("post_id");
+                        String userName = subJsonObject.getString("user_name");
+                        for (int j = 0; j < BasicInfo.mPostList.size(); j++) {
+                            if (postId.equals(BasicInfo.mPostList.get(j).postId)) {
+                                BasicInfo.mPostList.get(j).likeName += (userName + " ");
+                            }
+                        }
+                    }
                 }
             } catch (Exception e) {
                 if (Global.HTTP_DEBUG_MODE)
