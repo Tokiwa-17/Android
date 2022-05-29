@@ -40,8 +40,15 @@ def get_mypost():
         for post in post_query:
             title = post.title
             text = post.text
-            print(f'text: {text}')
-            post_list.append({'title': title, 'text': text})
+            user_id = post.user_id
+            user = User.query.filter(User.id == user_id).first()
+            name = user.nickname
+            avatar_url = user.avatar
+            time = post.time.strftime('%Y-%m-%d %H:%M:%S')
+            like = post.like_num
+            post_list.append(
+                {'postId': post.post_id, 'userId': user_id, 'name': name, 'avatar_url': avatar_url, 'title': title,
+                 'text': text, 'like': like, 'time': time})
     return {'post_list': post_list}, 200
 
 
@@ -59,7 +66,7 @@ def get_allpost():
     print(f'num: {num}')
     post_list = []
 
-    post_query = Post.query.order_by(Post.time).all()
+    post_query = Post.query.order_by(Post.time.desc()).all()
     if post_query != None:
         i = 0
         for post in post_query:

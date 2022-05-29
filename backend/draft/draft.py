@@ -1,4 +1,6 @@
 from flask import Blueprint, request, jsonify
+
+from ..user.models import User
 from .models import Draft
 from ..db import db
 
@@ -29,8 +31,15 @@ def get_draft():
         for draft in draft_query:
             title = draft.title
             text = draft.text
+            user_id = draft.user_id
+            user = User.query.filter(User.id == user_id).first()
+            name = user.nickname
+            time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            avatar_url = user.avatar
             print(f'text: {text}')
-            draft_list.append({'title':title, 'text':text})
+            draft_list.append(
+                {'postId': draft.draft_id, 'userId': user_id, 'name': name, 'avatar_url': avatar_url, 'title': title,
+                 'text': text, 'like': 0, 'time': time})
     return {'draft_list': draft_list}, 200
 
 

@@ -1,18 +1,40 @@
 package com.example.myapplication.fragment.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.GeneralPostAdapter;
+import com.example.myapplication.activity.PostActivity;
+import com.example.myapplication.activity.VisitHomePageActivity;
 import com.example.myapplication.adapter.MypostAdapter;
+import com.example.myapplication.entity.PostInfo;
+import com.example.myapplication.entity.ShortProfile;
+import com.example.myapplication.myView.UpvoteButton;
+import com.example.myapplication.request.post.getMypost;
 import com.example.myapplication.utils.BasicInfo;
+import com.example.myapplication.utils.Global;
+
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.LinkedList;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,7 +96,62 @@ public class DraftFragment extends Fragment {
             mypostAdapter = new MypostAdapter(BasicInfo.mDraftlist,getContext());
             mypostAdapter.setRecyclerManager(mRecyclerView);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+            mypostAdapter.setOnItemClickListener((adapter, view, position) -> {
+                visitEditPage(position);
+            });
         }
+
         return root;
+    }
+
+    public void visitEditPage(int position) {
+        PostInfo drafPost;
+        drafPost = BasicInfo.mDraftlist.get(position);
+//        new getTargetpost(new Callback() {
+//            @Override
+//            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+////            LoginActivity.this.runOnUiThread(() -> Hint.endActivityLoad(LoginActivity.this));
+////            LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "登录失败..."));
+//                if (Global.HTTP_DEBUG_MODE)
+//                    Log.e("HttpError", e.toString());
+//            }
+//            @Override
+//            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+//                try {
+//                    if (response.code() != 200) {
+//                        //LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "获取关注列表失败..."));
+//                    } else {
+//                        ResponseBody responseBody = response.body();
+//                        String responseBodyString = responseBody != null ? responseBody.string() : "";
+//                        if (Global.HTTP_DEBUG_MODE) {
+//                            Log.e("HttpResponse", responseBodyString);
+//                        }
+//                        JSONObject jsonObject = new JSONObject(responseBodyString);
+//                        JSONArray jsonArray = (JSONArray) jsonObject.get("post_list");
+//                        if(BasicInfo.mTargetpost != null) {
+//                            BasicInfo.mTargetpost.clear();
+//                        }
+//                        BasicInfo.mTargetpostNumber = jsonArray.length();
+//                        BasicInfo.mTargetpost = new LinkedList<>();
+//                        for (int i = 0; i < jsonArray.length(); i++) {
+//                            JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
+//                            String title = subJsonObject.getString("title");
+//                            String text = subJsonObject.getString("text");
+//                            PostInfo post = new PostInfo(shortProfile.name,shortProfile.url,title, text);
+//                            BasicInfo.mTargetpost.add(post);
+//                        }
+//                    }
+//                }
+//                catch (Exception e) {
+//                    if (Global.HTTP_DEBUG_MODE)
+//                        Log.e("HttpResponse", e.toString());
+//                }
+//            }
+//        }, draftPost.id).send();
+        Intent intent = new Intent(getContext(), PostActivity.class);
+        intent.putExtra("id", drafPost.postId);
+        intent.putExtra("title", drafPost.title);
+        intent.putExtra("text", drafPost.text);
+        startActivity(intent);
     }
 }

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.andreabaccega.widget.FormEditText;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.GridImageAdapter;
 import com.luck.picture.lib.PictureSelector;
@@ -39,6 +41,8 @@ public class PostActivity extends BaseActivity {
     private GridImageAdapter adapter;
     private RecyclerView mRecyclerView;
     private PopupWindow pop;
+    private FormEditText title;
+    private FormEditText text;
 
     ImageButton pictureButton, audioButton, videoButton;
     @Override
@@ -46,6 +50,11 @@ public class PostActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
+        Intent intent = getIntent();
+        title = findViewById(R.id.post_title);
+        text = findViewById(R.id.post_content);
+        title.setText(intent.getStringExtra("title"));
+        text.setText(intent.getStringExtra("text"));
 
         pictureButton = findViewById(R.id.pictures);
         audioButton = findViewById(R.id.audio);

@@ -18,6 +18,7 @@
     <string name="title_dashboard">我的</string>
     <string name="title_notifications">通知</string>
     <string name="title_query">搜索</string>
+    <string name="title_draft">草稿</string>
     <string name="title_conversations">会话</string>
     <string name="title_follow">关注</string>
 
