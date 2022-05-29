@@ -352,7 +352,13 @@ public class LoginActivity extends BaseActivity {
                         JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
                         String title = subJsonObject.getString("title");
                         String text = subJsonObject.getString("text");
-                        PostInfo post = new PostInfo(BasicInfo.mName,BasicInfo.mAvatarUrl,title, text);
+                        String name = subJsonObject.getString("name");
+                        String avatar_url = subJsonObject.getString("avatar_url");
+                        int like = subJsonObject.getInt("like");
+                        String time = subJsonObject.getString("time");
+                        String postId = subJsonObject.getString("postId");
+                        String userId = subJsonObject.getString("userId");
+                        PostInfo post = new PostInfo(postId, userId, name,avatar_url,title, text,like,time);
                         BasicInfo.mMypost.add(post);
                     }
                 }
@@ -490,8 +496,15 @@ public class LoginActivity extends BaseActivity {
                         JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
                         String title = subJsonObject.getString("title");
                         String text = subJsonObject.getString("text");
-                        PostInfo post = new PostInfo(BasicInfo.mName,BasicInfo.mAvatarUrl,title, text);
+                        String name = subJsonObject.getString("name");
+                        String avatar_url = subJsonObject.getString("avatar_url");
+                        int like = subJsonObject.getInt("like");
+                        String time = subJsonObject.getString("time");
+                        String postId = subJsonObject.getString("postId");
+                        String userId = subJsonObject.getString("userId");
+                        PostInfo post = new PostInfo(postId, userId, name,avatar_url,title, text,like,time);
                         BasicInfo.mDraftlist.add(post);
+
                     }
                 }
             } catch (Exception e) {
