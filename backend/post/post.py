@@ -66,7 +66,7 @@ def get_allpost():
     print(f'num: {num}')
     post_list = []
 
-    post_query = Post.query.order_by(Post.time).all()
+    post_query = Post.query.order_by(Post.time.desc()).all()
     if post_query != None:
         i = 0
         for post in post_query:

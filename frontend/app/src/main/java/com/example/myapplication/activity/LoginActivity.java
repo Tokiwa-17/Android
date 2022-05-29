@@ -651,6 +651,7 @@ public class LoginActivity extends BaseActivity {
         new GetFanlistRequest(getFollowListCallback, mId).send();
         new GetWatchlistRequest(getWatchListCallback, mId).send();
 
+
     }
 
     private synchronized void addCounter() {
