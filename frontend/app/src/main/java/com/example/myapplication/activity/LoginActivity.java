@@ -3,9 +3,14 @@ package com.example.myapplication.activity;
 import com.example.myapplication.activity.BaseActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -194,6 +199,7 @@ public class LoginActivity extends BaseActivity {
                 Log.e("HttpError", e.toString());
         }
     };
+
     private okhttp3.Callback getWatchListCallback = new Callback() {
         @Override
         public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -310,7 +316,9 @@ public class LoginActivity extends BaseActivity {
                         JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
                         String type = subJsonObject.getString("type");
                         String text = subJsonObject.getString("text");
-                        NoticeInfo notice = new NoticeInfo(type, text);
+                        String postId = subJsonObject.getString("postId");
+                        boolean read = subJsonObject.getBoolean("read");
+                        NoticeInfo notice = new NoticeInfo(type, text, postId, read);
                         BasicInfo.mNoticeList.add(notice);
                     }
                 }

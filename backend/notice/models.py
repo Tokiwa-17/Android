@@ -9,6 +9,8 @@ class Notice(db.Model):
     type = db.Column(db.Integer)
     user_id = db.Column(db.String(32))
     text = db.Column(db.String(128))
+    post_id = db.Column(db.String(32))
+    read = db.Column(db.Boolean)
 
     def __repr__(self):
         return '<notice %r>' % self.notice_id

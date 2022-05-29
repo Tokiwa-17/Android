@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.MyService;
 import com.example.myapplication.R;
@@ -44,6 +45,7 @@ import com.example.myapplication.request.testRequest.testGet2;
 import com.example.myapplication.request.testRequest.testPost;
 import com.example.myapplication.utils.BasicInfo;
 import com.example.myapplication.utils.Global;
+import com.example.myapplication.utils.Hint;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.jetbrains.annotations.NotNull;
@@ -72,11 +74,11 @@ public class MainActivity extends AppCompatActivity {
     private Runnable mTimeCounterRunnable = new Runnable() {
         @Override
         public void run() {
-            Log.e("消息列表轮询", "+1");
             mHandler.postDelayed(this,  10 * 1000);
             refreshData();
         }
     };
+
     int count = 0;
     private static final int ID = 1;
     private static final String CHANNELID ="1";
@@ -354,7 +356,12 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
                         String type = subJsonObject.getString("type");
                         String text = subJsonObject.getString("text");
-                        NoticeInfo notice = new NoticeInfo(type, text);
+                        String postId = subJsonObject.getString("postId");
+                        boolean read = subJsonObject.getBoolean("read");
+                        if(!read){
+                            MainActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(MainActivity.this, "通知..."));
+                        }
+                        NoticeInfo notice = new NoticeInfo(type, text, postId, read);
                         BasicInfo.mNoticeList.add(notice);
                     }
                 }
@@ -665,16 +672,6 @@ public class MainActivity extends AppCompatActivity {
         //安卓8.0以上弹出通知需要添加渠道NotificationChannel
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             //创建渠道
-            /**
-             * importance:用于表示渠道的重要程度。这可以控制发布到此频道的中断通知的方式。
-             * 有以下6种重要性，是NotificationManager的静态常量，依次递增:
-             * IMPORTANCE_UNSPECIFIED（值为-1）意味着用户没有表达重要性的价值。此值用于保留偏好设置，不应与实际通知关联。
-             * IMPORTANCE_NONE（值为0）不重要的通知：不会在阴影中显示。
-             * IMPORTANCE_MIN（值为1）最低通知重要性：只显示在阴影下，低于折叠。这不应该与Service.startForeground一起使用，因为前台服务应该是用户关心的事情，所以它没有语义意义来将其通知标记为最低重要性。如果您从Android版本O开始执行此操作，系统将显示有关您的应用在后台运行的更高优先级通知。
-             * IMPORTANCE_LOW（值为2）低通知重要性：无处不在，但不侵入视觉。
-             * IMPORTANCE_DEFAULT （值为3）：默认通知重要性：随处显示，产生噪音，但不会在视觉上侵入。
-             * IMPORTANCE_HIGH（值为4）更高的通知重要性：随处显示，造成噪音和窥视。可以使用全屏的Intent。
-             */
             NotificationChannel channel = new NotificationChannel(CHANNELID, CHANNELNAME, NotificationManager.IMPORTANCE_HIGH);
             manager.createNotificationChannel(channel);//开启渠道
             NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, CHANNELID);
@@ -683,16 +680,7 @@ public class MainActivity extends AppCompatActivity {
                     .setWhen(System.currentTimeMillis())//通知显示时间
                     .setSmallIcon(R.drawable.ic_baseline_add_24)
                     .setAutoCancel(true)//点击通知取消
-                    //.setSound()
-                    //第一个参数为手机静止时间，第二个参数为手机震动时间，周而复始
                     .setVibrate(new long[]{0, 1000, 1000, 1000})//手机震动
-                    /**表示通知的重要程度
-                     * RIORITY_DEFAULT
-                     * RIORITY_MIN
-                     * RIORITY_LOW
-                     * RIORITY_HIGE
-                     * RIORITY_MAX
-                     **/
                     .setPriority(NotificationCompat.PRIORITY_MAX);
             manager.notify(1, builder.build());
         } else {
@@ -705,6 +693,7 @@ public class MainActivity extends AppCompatActivity {
             manager.notify(1, notification);
         }
     }
+
     private synchronized void refreshData() {
 //        Intent intent = new Intent(getContext(), MyService.class);
 //        getActivity().startService(intent);
@@ -732,6 +721,13 @@ public class MainActivity extends AppCompatActivity {
         int count = 0;
         new GetFanlistRequest(getFollowListCallback, BasicInfo.mId).send();
         new GetWatchlistRequest(getWatchListCallback, BasicInfo.mId).send();
+
+        for(NoticeInfo notice : BasicInfo.mNoticeList){
+            if(!notice.read){
+                createNotice(notice.type, notice.text);
+            }
+        }
+
 
     }
 }
