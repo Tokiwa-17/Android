@@ -3,6 +3,7 @@ package com.example.myapplication.utils;
 import com.example.myapplication.entity.PostInfo;
 import com.example.myapplication.entity.ShortProfile;
 import com.example.myapplication.entity.NoticeInfo;
+import com.example.myapplication.entity.UpvoteInfo;
 import com.example.myapplication.entity.UserInfo;
 
 import java.util.ArrayList;
@@ -44,6 +45,9 @@ public class BasicInfo {
     public static int mResultPostNumber;
     public static List<PostInfo> mTargetpost;
     public static int mTargetpostNumber;
+    public static String mPostListID;
+//    public static List<UpvoteInfo> mUpvoteList;
+//    public static List<String> mUpvoteName;
 
     public static Lock lock = new ReentrantLock();
 

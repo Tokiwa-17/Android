@@ -9,6 +9,7 @@ public class PostInfo {
     public String text;
     public int like;
     public String time;
+    public String likeName;
 
     public PostInfo(String nickname, String avatarUrl, String title, String text) {
         this.nickname = nickname;
@@ -18,6 +19,8 @@ public class PostInfo {
     }
 
     public PostInfo(String postId, String userId, String nickname, String avatarUrl, String title, String text, int like, String time) {
+        this.postId = postId;
+        this.userId = userId;
         this.nickname = nickname;
         this.avatarUrl = avatarUrl;
         this.title = title;

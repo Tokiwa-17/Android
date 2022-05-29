@@ -32,6 +32,8 @@ import com.example.myapplication.request.follow.GetFanlistRequest;
 import com.example.myapplication.request.follow.GetWatchlistRequest;
 import com.example.myapplication.request.follow.getFollowList;
 import com.example.myapplication.request.follow.getFollowedList;
+import com.example.myapplication.request.like.getPostListID;
+import com.example.myapplication.request.like.getUpvote;
 import com.example.myapplication.request.notification.getNoticeList;
 import com.example.myapplication.request.post.getAllpost;
 import com.example.myapplication.request.post.getMypost;
@@ -507,6 +509,99 @@ public class LoginActivity extends BaseActivity {
         }
     };
 
+    private okhttp3.Callback handleUpvoteList = new okhttp3.Callback() {
+        @Override
+        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            try {
+                if (response.code() != 200) {
+                    //LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "获取关注列表失败..."));
+                } else {
+                    ResponseBody responseBody = response.body();
+                    String responseBodyString = responseBody != null ? responseBody.string() : "";
+                    if (Global.HTTP_DEBUG_MODE) {
+                        Log.e("HttpResponse", responseBodyString);
+                    }
+                    JSONObject jsonObject = new JSONObject(responseBodyString);
+                    JSONArray jsonArray = (JSONArray) jsonObject.get("upvote_list");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
+                        String postId = subJsonObject.getString("post_id");
+                        String userName = subJsonObject.getString("user_name");
+                        for (int j = 0; j < BasicInfo.mPostList.size(); j++) {
+
+                        }
+                    }
+//                    if(BasicInfo.mDraftlist != null) {
+//                        BasicInfo.mDraftlist.clear();
+//                    }
+//                    BasicInfo.mDraftNumber = jsonArray.length();
+//                    BasicInfo.mDraftlist = new LinkedList<>();
+//                    for (int i = 0; i < jsonArray.length(); i++) {
+//                        JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
+//                        String title = subJsonObject.getString("title");
+//                        String text = subJsonObject.getString("text");
+//                        PostInfo post = new PostInfo(BasicInfo.mName,BasicInfo.mAvatarUrl,title, text);
+//                        BasicInfo.mDraftlist.add(post);
+//                    }
+                }
+            } catch (Exception e) {
+                if (Global.HTTP_DEBUG_MODE)
+                    Log.e("HttpResponse", e.toString());
+            }
+        }
+
+        @Override
+        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+//            LoginActivity.this.runOnUiThread(() -> Hint.endActivityLoad(LoginActivity.this));
+//            LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "登录失败..."));
+            if (Global.HTTP_DEBUG_MODE)
+                Log.e("HttpError", e.toString());
+        }
+    };
+
+    private okhttp3.Callback handlePostListID = new okhttp3.Callback() {
+        @Override
+        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            try {
+                if (response.code() != 200) {
+                    //LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "获取关注列表失败..."));
+                } else {
+                    ResponseBody responseBody = response.body();
+                    String responseBodyString = responseBody != null ? responseBody.string() : "";
+                    if (Global.HTTP_DEBUG_MODE) {
+                        Log.e("HttpResponse", responseBodyString);
+                    }
+                    JSONObject jsonObject = new JSONObject(responseBodyString);
+                    JSONArray jsonArray = (JSONArray) jsonObject.get("upvote_list");
+                    for (int j = 0; j < BasicInfo.mPostList.size(); j++) {
+                        BasicInfo.mPostList.get(j).likeName = "";
+                    }
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
+                        String postId = subJsonObject.getString("post_id");
+                        String userName = subJsonObject.getString("user_name");
+                        for (int j = 0; j < BasicInfo.mPostList.size(); j++) {
+                            if (postId.equals(BasicInfo.mPostList.get(j).postId)) {
+                                BasicInfo.mPostList.get(j).likeName += (userName + " ");
+                            }
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                if (Global.HTTP_DEBUG_MODE)
+                    Log.e("HttpResponse", e.toString());
+            }
+        }
+
+        @Override
+        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+//            LoginActivity.this.runOnUiThread(() -> Hint.endActivityLoad(LoginActivity.this));
+//            LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "登录失败..."));
+            if (Global.HTTP_DEBUG_MODE)
+                Log.e("HttpError", e.toString());
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -535,6 +630,9 @@ public class LoginActivity extends BaseActivity {
         new getWatchpost(this.handleWatchpostList, mId, "20").send();
         // 填充被屏蔽用户列表
         new getBlockList(getBlockListCallback,mId).send();
+        // 填充点赞列表
+        new getPostListID(handlePostListID, "20").send();
+        //new getUpvote(this.handleUpvoteList, BasicInfo.mPostListID).send();
         
         int count = 0;
         new GetFanlistRequest(getFollowListCallback, mId).send();
