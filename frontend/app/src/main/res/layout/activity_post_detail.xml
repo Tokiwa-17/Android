@@ -4,6 +4,91 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.PostDetailActivity">
+    tools:context=".activity.PostDetailActivity"
+
+    android:theme="@style/MyAppTheme">
+
+    <RelativeLayout
+        android:id="@+id/pd_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        tools:ignore="MissingConstraints">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/pd_avatar"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:clickable="true"
+            android:src="@drawable/ic_avatarholder" />
+
+        <!--            app:layout_constraintBottom_toBottomOf="@+id/pd_nickname"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="@+id/pd_nickname" />-->
+
+        <TextView
+            android:id="@+id/pd_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginBottom="1dp"
+            android:layout_toEndOf="@id/pd_avatar"
+            android:layout_centerInParent="true"
+            android:text="TextView"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/pd_avatar" />
+
+        <!--            app:layout_constraintBottom_toBottomOf="@id/pd_avatar"-->
+        <!--            app:layout_constraintTop_toTopOf="@id/pd_avatar" />-->
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/pd_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pd_avatar"
+        app:layout_constraintTop_toBottomOf="@id/pd_author"
+        tools:ignore="MissingConstraints,NotSibling,UnknownId">
+
+        <TextView
+            android:id="@+id/pd_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Text here!"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="20dp"
+            tools:ignore="NotSibling" />
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+        <!--            android:id="@+id/pd_recycler"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/pd_text"-->
+        <!--            android:overScrollMode="never"-->
+        <!--            tools:ignore="MissingConstraints,NotSibling" />-->
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/comment_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:text="评论区"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toBottomOf="@+id/pd_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/pd_comments"
+        app:layout_constraintTop_toBottomOf="@+id/comment_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pd_text"
+        android:overScrollMode="never"
+        tools:ignore="MissingConstraints,NotSibling" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

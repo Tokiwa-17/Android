@@ -263,7 +263,14 @@ public class HomeFragment extends Fragment {
     }
 
     public void visitHomePage(int position) {
+        PostInfo postInfo;
+        postInfo = BasicInfo.mPostList.get(position);
+        Log.e("TTTTTTTTTT", postInfo.avatarUrl);
         Intent intent = new Intent(getContext(), PostDetailActivity.class);
+        intent.putExtra("url", postInfo.avatarUrl);
+        intent.putExtra("title", postInfo.title);
+        intent.putExtra("nickname", postInfo.nickname);
+        intent.putExtra("content", postInfo.text);
         startActivity(intent);
     }
 
