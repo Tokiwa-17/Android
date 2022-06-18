@@ -210,3 +210,17 @@ def get_post_list_id():
         pass
     print(upvote_list)
     return {"upvote_list": upvote_list}, 200
+
+@post.route("/api/post/add_post", methods=['GET', 'POST'])
+def add_post():
+    user_id = request.args.get('id')
+    title = request.args.get('title')
+    text = request.args.get('text')
+    new_post = Post()
+    new_post.user_id = user_id
+    new_post.title = title
+    new_post.text = text
+    new_post.time = datetime.now()
+    db.session.add(new_post)
+    db.session.commit()
+    return "OK", 200
