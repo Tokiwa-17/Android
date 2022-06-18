@@ -2,6 +2,7 @@ package com.example.myapplication.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.andreabaccega.widget.FormEditText;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.GridImageAdapter;
+import com.example.myapplication.request.post.addPost;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -29,10 +31,25 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.permissions.Permission;
 import com.luck.picture.lib.permissions.RxPermissions;
 
+import com.example.myapplication.utils.BasicInfo;
+import com.example.myapplication.utils.Global;
+
+
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 
 import io.reactivex.functions.Consumer;
+import okhttp3.Call;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class PostActivity extends BaseActivity {
 
@@ -43,6 +60,7 @@ public class PostActivity extends BaseActivity {
     private PopupWindow pop;
     private FormEditText title;
     private FormEditText text;
+    private TextView post_btn;
 
     ImageButton pictureButton, audioButton, videoButton;
     @Override
@@ -53,8 +71,42 @@ public class PostActivity extends BaseActivity {
         Intent intent = getIntent();
         title = findViewById(R.id.post_title);
         text = findViewById(R.id.post_content);
+        post_btn = findViewById(R.id.confirm_post);
         title.setText(intent.getStringExtra("title"));
         text.setText(intent.getStringExtra("text"));
+        post_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new addPost(new okhttp3.Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+//            LoginActivity.this.runOnUiThread(() -> Hint.endActivityLoad(LoginActivity.this));
+//            LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "登录失败..."));
+                        if (Global.HTTP_DEBUG_MODE)
+                            Log.e("HttpError", e.toString());
+                    }
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        try {
+                            if (response.code() != 200) {
+                                //LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "获取关注列表失败..."));
+                            } else {
+                                ResponseBody responseBody = response.body();
+                                String responseBodyString = responseBody != null ? responseBody.string() : "";
+                                if (Global.HTTP_DEBUG_MODE) {
+                                    Log.e("HttpResponse", responseBodyString);
+                                }
+                            }
+                        }
+                        catch (Exception e) {
+                            if (Global.HTTP_DEBUG_MODE)
+                                Log.e("HttpResponse", e.toString());
+                        }
+                    }
+                },BasicInfo.mId, title.getText().toString(), text.getText().toString()).send();
+                PostActivity.this.finish();
+            }
+        });
 
         pictureButton = findViewById(R.id.pictures);
         audioButton = findViewById(R.id.audio);
@@ -253,5 +305,7 @@ public class PostActivity extends BaseActivity {
             }
         }
     }
+
+
 
 }
