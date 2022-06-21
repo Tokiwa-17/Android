@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from sqlalchemy import or_
 
+from ..draft.models import Draft
 from ..block.models import Block
 from ..follow.models import Follow
 from ..user.models import User
@@ -216,6 +217,11 @@ def add_post():
     user_id = request.args.get('id')
     title = request.args.get('title')
     text = request.args.get('text')
+    draft_id = request.args.get('draft_id')
+    if draft_id:
+        print(f'draft_id: {draft_id}')
+        target_draft = Draft.query.filter(Draft.draft_id == draft_id).first()
+        db.session.delete(target_draft)
     new_post = Post()
     new_post.user_id = user_id
     new_post.title = title

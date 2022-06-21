@@ -107,49 +107,8 @@ public class DraftFragment extends Fragment {
     public void visitEditPage(int position) {
         PostInfo drafPost;
         drafPost = BasicInfo.mDraftlist.get(position);
-//        new getTargetpost(new Callback() {
-//            @Override
-//            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-////            LoginActivity.this.runOnUiThread(() -> Hint.endActivityLoad(LoginActivity.this));
-////            LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "登录失败..."));
-//                if (Global.HTTP_DEBUG_MODE)
-//                    Log.e("HttpError", e.toString());
-//            }
-//            @Override
-//            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-//                try {
-//                    if (response.code() != 200) {
-//                        //LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "获取关注列表失败..."));
-//                    } else {
-//                        ResponseBody responseBody = response.body();
-//                        String responseBodyString = responseBody != null ? responseBody.string() : "";
-//                        if (Global.HTTP_DEBUG_MODE) {
-//                            Log.e("HttpResponse", responseBodyString);
-//                        }
-//                        JSONObject jsonObject = new JSONObject(responseBodyString);
-//                        JSONArray jsonArray = (JSONArray) jsonObject.get("post_list");
-//                        if(BasicInfo.mTargetpost != null) {
-//                            BasicInfo.mTargetpost.clear();
-//                        }
-//                        BasicInfo.mTargetpostNumber = jsonArray.length();
-//                        BasicInfo.mTargetpost = new LinkedList<>();
-//                        for (int i = 0; i < jsonArray.length(); i++) {
-//                            JSONObject subJsonObject = jsonArray.getJSONObject(i) ;
-//                            String title = subJsonObject.getString("title");
-//                            String text = subJsonObject.getString("text");
-//                            PostInfo post = new PostInfo(shortProfile.name,shortProfile.url,title, text);
-//                            BasicInfo.mTargetpost.add(post);
-//                        }
-//                    }
-//                }
-//                catch (Exception e) {
-//                    if (Global.HTTP_DEBUG_MODE)
-//                        Log.e("HttpResponse", e.toString());
-//                }
-//            }
-//        }, draftPost.id).send();
         Intent intent = new Intent(getContext(), PostActivity.class);
-        intent.putExtra("id", drafPost.postId);
+        intent.putExtra("draft_id", drafPost.postId);
         intent.putExtra("title", drafPost.title);
         intent.putExtra("text", drafPost.text);
         startActivity(intent);

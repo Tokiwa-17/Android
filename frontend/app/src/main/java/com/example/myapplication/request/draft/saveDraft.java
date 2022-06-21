@@ -1,14 +1,14 @@
-package com.example.myapplication.request.post;
+package com.example.myapplication.request.draft;
 
 import com.example.myapplication.request.base.BaseGetRequest;
 import okhttp3.Callback;
 
-public class addPost extends BaseGetRequest {
-    public addPost(Callback callback, String mId, String title, String text, String draft_id) {
+public class saveDraft extends BaseGetRequest {
+    public saveDraft(Callback callback, String user_id, String title, String text, String draft_id) {
         // 设置请求URL
-        this.to("/api/post/add_post");
+        this.to("/api/draft/add_draft");
         // 设置请求参数
-        this.put("id", mId);
+        this.put("user_id", user_id);
         this.put("title", title);
         this.put("text", text);
         this.put("draft_id", draft_id);
