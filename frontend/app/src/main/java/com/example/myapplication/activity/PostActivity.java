@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -23,6 +25,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.andreabaccega.widget.FormEditText;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.GridImageAdapter;
+import com.example.myapplication.request.draft.deleteDraft;
+import com.example.myapplication.request.draft.saveDraft;
 import com.example.myapplication.request.post.addPost;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -61,6 +65,16 @@ public class PostActivity extends BaseActivity {
     private FormEditText title;
     private FormEditText text;
     private TextView post_btn;
+    private TextView delete_btn;
+    private String draft_id;
+    private Handler mHandler = new Handler(Looper.getMainLooper());
+    private Runnable mTimeCounterRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mHandler.postDelayed(this,  10 * 1000);
+            saveDraft();
+        }
+    };
 
     ImageButton pictureButton, audioButton, videoButton;
     @Override
@@ -72,16 +86,16 @@ public class PostActivity extends BaseActivity {
         title = findViewById(R.id.post_title);
         text = findViewById(R.id.post_content);
         post_btn = findViewById(R.id.confirm_post);
+        delete_btn = findViewById(R.id.delete_post);
         title.setText(intent.getStringExtra("title"));
         text.setText(intent.getStringExtra("text"));
+        draft_id = intent.getStringExtra("draft_id");
         post_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new addPost(new okhttp3.Callback() {
                     @Override
                     public void onFailure(@NotNull Call call, @NotNull IOException e) {
-//            LoginActivity.this.runOnUiThread(() -> Hint.endActivityLoad(LoginActivity.this));
-//            LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "登录失败..."));
                         if (Global.HTTP_DEBUG_MODE)
                             Log.e("HttpError", e.toString());
                     }
@@ -103,7 +117,38 @@ public class PostActivity extends BaseActivity {
                                 Log.e("HttpResponse", e.toString());
                         }
                     }
-                },BasicInfo.mId, title.getText().toString(), text.getText().toString()).send();
+                },BasicInfo.mId, title.getText().toString(), text.getText().toString(), draft_id).send();
+                PostActivity.this.finish();
+            }
+        });
+        delete_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new deleteDraft(new okhttp3.Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                        if (Global.HTTP_DEBUG_MODE)
+                            Log.e("HttpError", e.toString());
+                    }
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        try {
+                            if (response.code() != 200) {
+                                //LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "获取关注列表失败..."));
+                            } else {
+                                ResponseBody responseBody = response.body();
+                                String responseBodyString = responseBody != null ? responseBody.string() : "";
+                                if (Global.HTTP_DEBUG_MODE) {
+                                    Log.e("HttpResponse", responseBodyString);
+                                }
+                            }
+                        }
+                        catch (Exception e) {
+                            if (Global.HTTP_DEBUG_MODE)
+                                Log.e("HttpResponse", e.toString());
+                        }
+                    }
+                }, draft_id).send();
                 PostActivity.this.finish();
             }
         });
@@ -112,6 +157,7 @@ public class PostActivity extends BaseActivity {
         audioButton = findViewById(R.id.audio);
         videoButton = findViewById(R.id.video);
         mRecyclerView = findViewById(R.id.recycler);
+        mTimeCounterRunnable.run();
 
         initWidget();
 
@@ -304,6 +350,37 @@ public class PostActivity extends BaseActivity {
                 adapter.notifyDataSetChanged();
             }
         }
+    }
+
+    private synchronized void saveDraft() {
+        new saveDraft(new okhttp3.Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                if (Global.HTTP_DEBUG_MODE)
+                    Log.e("HttpError", e.toString());
+            }
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try {
+                    if (response.code() != 200) {
+                        //LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "获取关注列表失败..."));
+                    } else {
+                        ResponseBody responseBody = response.body();
+                        String responseBodyString = responseBody != null ? responseBody.string() : "";
+                        JSONObject jsonObject = new JSONObject(responseBodyString);
+                        String jsonString = (String) jsonObject.get("draft_id");
+                        PostActivity.this.draft_id = jsonString;
+                        if (Global.HTTP_DEBUG_MODE) {
+                            Log.e("HttpResponse", responseBodyString);
+                        }
+                    }
+                }
+                catch (Exception e) {
+                    if (Global.HTTP_DEBUG_MODE)
+                        Log.e("HttpResponse", e.toString());
+                }
+            }
+        },BasicInfo.mId, title.getText().toString(), text.getText().toString(), draft_id).send();
     }
 
 
