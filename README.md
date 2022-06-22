@@ -6,3 +6,6 @@
   set FLASK_APP=backend
   flask run
 ```  
+
+## apk文件位置：
+  `Android/frontend/app/release/app-release.apk`
