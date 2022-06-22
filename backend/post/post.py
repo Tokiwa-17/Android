@@ -231,17 +231,15 @@ def get_post_list_id():
 
 @post.route("/api/post/add_post", methods=['GET', 'POST'])
 def add_post():
-    user_id = request.args.get('id')
-    title = request.args.get('title')
-    text = request.args.get('text')
-    draft_id = request.args.get('draft_id')
+    draft_id = request.form.get('draft_id')
+    title = request.form.get('title')
+    text = request.form.get('text')
+    user_id = request.form.get('user_id')
+    new_post = Post()
     if draft_id:
         print(f'draft_id: {draft_id}')
         target_draft = Draft.query.filter(Draft.draft_id == draft_id).first()
         db.session.delete(target_draft)
-    new_post = Post()
-    new_post.post_id = Post.postnum
-    Post.postnum += 1
     
     if request.files.get('image') is not None:
         image = request.files.get('image')
