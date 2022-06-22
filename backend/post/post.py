@@ -1,4 +1,5 @@
-from flask import Blueprint, request, jsonify
+#coding=utf-8
+from flask import Blueprint, request, jsonify, current_app
 from sqlalchemy import or_
 
 from ..block.models import Block
@@ -33,7 +34,7 @@ def post_test():
 @post.route('/api/post/get_mypost', methods=['GET', 'POST'])  # 前端向后端数据库发送数据
 def get_mypost():
     id = request.args.get('user_id')
-    print(f'id: {id}')
+#    print(f'id: {id}')
     post_list = []
     post_query = Post.query.filter(Post.user_id == id)
     if post_query != None:
@@ -48,8 +49,22 @@ def get_mypost():
             like = post.like_num
             post_list.append(
                 {'postId': post.post_id, 'userId': user_id, 'name': name, 'avatar_url': avatar_url, 'title': title,
-                 'text': text, 'like': like, 'time': time})
+                 'text': text, 'like': like, 'time': time,
+                             })
     return {'post_list': post_list}, 200
+
+@post.route("/api/post/post_detail", methods=['GET', 'POST'])
+def post_detail():
+    post_id = request.args.get('post_id')
+    post_list = []
+    if post_id is not None:
+        post_query = Post.query.filter(Post.post_id == post_id)
+        for post in post_query:
+#            image_url = post.image_url
+            image_url = current_app.send_static_file('images/{}.png'.format(post_id))
+        return image_url, 200
+    else:
+        return "nothing", 400
 
 
 @post.route('/api/post/get_allpost', methods=['GET', 'POST'])  # 前端向后端数据库发送数据
@@ -63,7 +78,7 @@ def get_allpost():
             block_list.append(user_id)
 
     num = request.args.get('num')
-    print(f'num: {num}')
+#    print(f'num: {num}')
     post_list = []
 
     post_query = Post.query.order_by(Post.time.desc()).all()
@@ -77,12 +92,14 @@ def get_allpost():
                 user = User.query.filter(User.id == user_id).first()
                 name = user.nickname
                 avatar_url = user.avatar
+                image_url = post.image_url
                 time = post.time.strftime('%Y-%m-%d %H:%M:%S')
                 like = post.like_num
-                print(f'text: {text}')
+#                print(f'text: {text}')
                 post_list.append(
                     {'postId': post.post_id, 'userId': user_id, 'name': name, 'avatar_url': avatar_url, 'title': title,
-                     'text': text, 'like': like, 'time': time})
+                     'text': text, 'like': like, 'time': time,
+                     'image_url': image_url})
     return {'all_post_list': post_list}, 200
 
 
@@ -117,7 +134,7 @@ def get_watchpost():
                 avatar_url = user.avatar
                 time = post.time.strftime('%Y-%m-%d %H:%M:%S')
                 like = post.like_num
-                print(f'text: {text}')
+#                print(f'text: {text}')
                 post_list.append(
                     {'postId': post.post_id, 'userId': user_id, 'name': name, 'avatar_url': avatar_url, 'title': title,
                      'text': text, 'like': like, 'time': time})
@@ -127,8 +144,8 @@ def get_watchpost():
 def get_query():
     query = request.args.get('query')
     type = request.args.get('type')
-    print(f'query: {query}')
-    print(f'type: {type}')
+#    print(f'query: {query}')
+#    print(f'type: {type}')
     if type == "动态名称":
         post_list = []
         post_query = Post.query.filter(Post.title.like("%{}%".format(query)))
@@ -188,7 +205,7 @@ def get_query():
 @post.route('/api/post/get_post_list_id', methods=['GET', 'POST'])
 def get_post_list_id():
     num = request.args.get('num')
-    print(f'num: {num}')
+#    print(f'num: {num}')
     post_list = ""
     post_query = Post.query.order_by(Post.time).all()
     upvote_list = []
@@ -213,14 +230,46 @@ def get_post_list_id():
 
 @post.route("/api/post/add_post", methods=['GET', 'POST'])
 def add_post():
-    user_id = request.args.get('id')
-    title = request.args.get('title')
-    text = request.args.get('text')
+    title = request.form.get('title')
+    text = request.form.get('text')
+    user_id = request.form.get('user_id')
     new_post = Post()
+    new_post.post_id = Post.postnum
+    Post.postnum += 1
+    
+    if request.files.get('image') is not None:
+        image = request.files.get('image')
+        image_path =  current_app.static_folder + '/images/{}.png'.format(new_post.post_id)
+        with open (image_path, 'wb+') as f:
+            f.write(image.read())
+            f.close()
+        new_post.image_url = '/static/images/{}.png'.format(new_post.post_id)
+        print(1)
+        
+    if request.files.get('video') is not None:
+        video = request.files.get('video')
+        video_path =  current_app.static_folder + '/videos/{}.mp4'.format(new_post.post_id)
+        with open (video_path, 'wb+') as f:
+            f.write(video.read())
+            f.close()
+        new_post.video_url = '/static/videos/{}.mp4'.format(new_post.post_id)
+        print(2)
+        
+    if request.files.get('audio') is not None:
+        audio = request.files.get('audio')
+        audio_path = current_app.static_folder + '/audios/{}.mp3'.format(new_post.post_id)
+        with open (audio_path, 'wb+') as f:
+            f.write(audio.read())
+            f.close()
+        new_post.audio_url = '/static/audios/{}.mp3'.format(new_post.post_id)
+        print(3)
+        
     new_post.user_id = user_id
     new_post.title = title
     new_post.text = text
     new_post.time = datetime.now()
     db.session.add(new_post)
     db.session.commit()
+
     return "OK", 200
+

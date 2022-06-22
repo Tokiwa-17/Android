@@ -1,3 +1,4 @@
+#coding=utf-8
 from flask import Blueprint, request, jsonify
 from .models import Follow
 
@@ -20,13 +21,13 @@ def follow_test():
 @follow.route('/api/follow/get_follow_list', methods=['GET'])
 def get_follow_list():
     id = request.args.get('user_id')
-    print(f'id: {id}')
+#    print(f'id: {id}')
     follow_list = []
     follow_query = Follow.query.filter(Follow.user_id == id)
     if follow_query != None:
         for follower in follow_query:
             user_id = follower.followed_user_id
-            print(f'user_id: {user_id}')
+#            print(f'user_id: {user_id}')
             user_query = User.query.filter(User.id == user_id)
             for user in user_query:
                 follow_list.append({'nickname':user.nickname, "avatar":user.avatar, 'introduction':user.introduction})
@@ -35,13 +36,13 @@ def get_follow_list():
 @follow.route('/api/follow/get_followed_list', methods=['GET'])
 def get_followed_list():
     id = request.args.get('user_id')
-    print(f'id: {id}')
+#    print(f'id: {id}')
     followed_list = []
     follow_query = Follow.query.filter(Follow.followed_user_id == id)
     if follow_query != None:
         for follower in follow_query:
             user_id = follower.user_id
-            print(f'user_id: {user_id}')
+#            print(f'user_id: {user_id}')
             user_query = User.query.filter(User.id == user_id)
             for user in user_query:
                 followed_list.append({'nickname':user.nickname, "avatar":user.avatar, 'introduction':user.introduction})
@@ -50,13 +51,13 @@ def get_followed_list():
 @follow.route('/api/follow/get_watchlist',  methods=['GET'])
 def get_watch_list():
     id = request.args.get('user_id')
-    print(f'id: {id}')
+#    print(f'id: {id}')
     followed_list = []
     follow_query = Follow.query.filter(Follow.followed_user_id == id)
     if follow_query != None:
         for follower in follow_query:
             user_id = follower.user_id
-            print(f'user_id: {user_id}')
+#            print(f'user_id: {user_id}')
             user_query = User.query.filter(User.id == user_id)
             for user in user_query:
                 followed_list.append({'id': user.id, 'name':user.nickname, "url":user.avatar, 'introduction':user.introduction})
@@ -65,13 +66,13 @@ def get_watch_list():
 @follow.route('/api/follow/get_fanlist',  methods=['GET'])
 def get_fan_list():
     id = request.args.get('user_id')
-    print(f'id: {id}')
+#    print(f'id: {id}')
     followed_list = []
     follow_query = Follow.query.filter(Follow.user_id == id)
     if follow_query != None:
         for follower in follow_query:
             user_id = follower.followed_user_id
-            print(f'user_id: {user_id}')
+#            print(f'user_id: {user_id}')
             user_query = User.query.filter(User.id == user_id)
             for user in user_query:
                 followed_list.append({'id': user.id, 'name':user.nickname, "url":user.avatar, 'introduction':user.introduction})
@@ -82,7 +83,7 @@ def delete_from_watch():
     user_id = request.args.get('user_id')
     fan_id = request.args.get('fan_id')
     follow_query = Follow.query.filter(Follow.user_id == user_id, Follow.followed_user_id == fan_id).first()
-    print(f'{follow_query.user_id}, {follow_query.followed_user_id}')
+#    print(f'{follow_query.user_id}, {follow_query.followed_user_id}')
     if follow_query != None:
         db.session.delete(follow_query)
         db.session.commit()
@@ -92,7 +93,7 @@ def delete_from_watch():
 def add_to_watch():
     user_id = request.args.get('user_id')
     fan_id = request.args.get('fan_id')
-    print(f'{user_id}, {fan_id}')
+#    print(f'{user_id}, {fan_id}')
     new_follow = Follow()
     new_follow.user_id = user_id
     new_follow.followed_user_id = fan_id

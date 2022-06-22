@@ -54,10 +54,20 @@
         tools:ignore="MissingConstraints,NotSibling,UnknownId">
 
         <TextView
+            android:id="@+id/pd_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Text here!"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="20dp"
+            tools:ignore="NotSibling" />
+        <TextView
             android:id="@+id/pd_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Text here!"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/pd_title"
             android:layout_marginBottom="20dp"
             android:layout_marginStart="20dp"
             tools:ignore="NotSibling" />
@@ -68,14 +78,32 @@
         <!--            android:layout_below="@+id/pd_text"-->
         <!--            android:overScrollMode="never"-->
         <!--            tools:ignore="MissingConstraints,NotSibling" />-->
+        <ImageView
+            android:id="@+id/pd_image"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_below="@id/pd_text"
+            tools:ignore="MissingConstraints,NotSibling"
+            android:layout_marginLeft="10dp">
+        </ImageView>
     </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/pd_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:overScrollMode="never"
+        android:layout_below="@+id/pd_content"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/comment_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="25dp"
-        android:text="评论区"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"

@@ -1,3 +1,4 @@
+#coding=utf-8
 from flask import Blueprint, request, jsonify
 
 from ..user.models import User
@@ -24,7 +25,7 @@ def draft_test():
 @draft.route('/api/draft/get_draft', methods=['GET', 'POST']) # 前端向后端数据库发送数据
 def get_draft():
     id = request.args.get('user_id')
-    print(f'id: {id}')
+#    print(f'id: {id}')
     draft_list = []
     draft_query = Draft.query.filter(Draft.user_id == id)
     if draft_query != None:
@@ -36,7 +37,7 @@ def get_draft():
             name = user.nickname
             time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             avatar_url = user.avatar
-            print(f'text: {text}')
+#            print(f'text: {text}')
             draft_list.append(
                 {'postId': draft.draft_id, 'userId': user_id, 'name': name, 'avatar_url': avatar_url, 'title': title,
                  'text': text, 'like': 0, 'time': time})

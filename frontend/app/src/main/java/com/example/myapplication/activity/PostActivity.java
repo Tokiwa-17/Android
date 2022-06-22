@@ -2,10 +2,13 @@ package com.example.myapplication.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.LocationManager;
+import android.location.LocationProvider;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -16,14 +19,18 @@ import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.example.myapplication.utils.BasicInfo;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.andreabaccega.widget.FormEditText;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.GridImageAdapter;
+import com.example.myapplication.request.follow.getFollowList;
 import com.example.myapplication.request.post.addPost;
+import com.example.myapplication.utils.BasicInfo;
+import com.example.myapplication.utils.Global;
+import com.example.myapplication.utils.Hint;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -31,91 +38,83 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.permissions.Permission;
 import com.luck.picture.lib.permissions.RxPermissions;
 
-import com.example.myapplication.utils.BasicInfo;
-import com.example.myapplication.utils.Global;
-
-
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
 
 import io.reactivex.functions.Consumer;
 import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class PostActivity extends BaseActivity {
 
     private int maxSelectNum = 9;
     private List<LocalMedia> selectList = new ArrayList<>();
+    private List<File> files = new ArrayList<>();
     private GridImageAdapter adapter;
     private RecyclerView mRecyclerView;
     private PopupWindow pop;
-    private FormEditText title;
-    private FormEditText text;
-    private TextView post_btn;
+    private TextView title;
+    private TextView text;
+    private TextView mLocationText;
 
     ImageButton pictureButton, audioButton, videoButton;
+    TextView confirmButton;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-
-        Intent intent = getIntent();
         title = findViewById(R.id.post_title);
         text = findViewById(R.id.post_content);
-        post_btn = findViewById(R.id.confirm_post);
-        title.setText(intent.getStringExtra("title"));
-        text.setText(intent.getStringExtra("text"));
-        post_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new addPost(new okhttp3.Callback() {
-                    @Override
-                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
-//            LoginActivity.this.runOnUiThread(() -> Hint.endActivityLoad(LoginActivity.this));
-//            LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "登录失败..."));
-                        if (Global.HTTP_DEBUG_MODE)
-                            Log.e("HttpError", e.toString());
-                    }
-                    @Override
-                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                        try {
-                            if (response.code() != 200) {
-                                //LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "获取关注列表失败..."));
-                            } else {
-                                ResponseBody responseBody = response.body();
-                                String responseBodyString = responseBody != null ? responseBody.string() : "";
-                                if (Global.HTTP_DEBUG_MODE) {
-                                    Log.e("HttpResponse", responseBodyString);
-                                }
-                            }
-                        }
-                        catch (Exception e) {
-                            if (Global.HTTP_DEBUG_MODE)
-                                Log.e("HttpResponse", e.toString());
-                        }
-                    }
-                },BasicInfo.mId, title.getText().toString(), text.getText().toString()).send();
-                PostActivity.this.finish();
-            }
-        });
-
         pictureButton = findViewById(R.id.pictures);
         audioButton = findViewById(R.id.audio);
         videoButton = findViewById(R.id.video);
+        confirmButton = findViewById(R.id.confirm_post);
         mRecyclerView = findViewById(R.id.recycler);
-
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        LocationProvider locationProvider = locationManager.getProvider(LocationManager.GPS_PROVIDER);
+        Log.e("Location",locationProvider.getName());
+        Toast.makeText(this,"GPS",Toast.LENGTH_SHORT).show();
         initWidget();
-
-
+        View.OnClickListener clickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Callback callback = new okhttp3.Callback(){
+                    @Override
+                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException { }
+                    @Override
+                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                        Log.i("TAG", "failure");
+                    }
+                };
+                Log.e("title", title.getText().toString());
+                Log.e("title2", title.toString());
+                new addPost(callback, BasicInfo.mId, title.getText().toString(),text.getText().toString(), selectList).send();
+            }
+        };
+        confirmButton.setOnClickListener(clickListener);
     }
     private void showPop() {
         View bottomView = View.inflate(PostActivity.this, R.layout.dialog_picturefrom, null);
@@ -211,16 +210,12 @@ public class PostActivity extends BaseActivity {
                     int mediaType = PictureMimeType.pictureToVideo(pictureType);
                     switch (mediaType) {
                         case 1:
-                            // 预览图片 可自定长按保存路径
-                            //PictureSelector.create(MainActivity.this).externalPicturePreview(position, "/custom_file", selectList);
                             PictureSelector.create(PostActivity.this).externalPicturePreview(position, selectList);
                             break;
                         case 2:
-                            // 预览视频
                             PictureSelector.create(PostActivity.this).externalPictureVideo(media.getPath());
                             break;
                         case 3:
-                            // 预览音频
                             PictureSelector.create(PostActivity.this).externalPictureAudio(media.getPath());
                             break;
                     }
@@ -291,21 +286,16 @@ public class PostActivity extends BaseActivity {
             if (requestCode == PictureConfig.CHOOSE_REQUEST) {// 图片选择结果回调
 
                 images = PictureSelector.obtainMultipleResult(data);
+                //files.addAll(images);
                 selectList.addAll(images);
-
-                //selectList = PictureSelector.obtainMultipleResult(data);
-
-                // 例如 LocalMedia 里面返回三种path
-                // 1.media.getPath(); 为原图path
-                // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
-                // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
-                // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
+                Log.e("eee",images.toString());
                 adapter.setList(selectList);
                 adapter.notifyDataSetChanged();
             }
         }
     }
+    public void openLocation() {
 
-
+    }
 
 }

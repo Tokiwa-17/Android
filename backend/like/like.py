@@ -1,3 +1,4 @@
+#coding=utf-8
 from flask import Blueprint, request, jsonify
 from .models import Like
 from ..user.models import User
@@ -34,6 +35,6 @@ def get_upvote():
                 upvote_list.append({"post_id": id, "user_name": user_name})
     except:
         pass
-    print(upvote_list)
+#    print(upvote_list)
     return {"upvote_list" : upvote_list}, 200
 

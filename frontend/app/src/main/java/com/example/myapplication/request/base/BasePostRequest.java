@@ -1,5 +1,7 @@
 package com.example.myapplication.request.base;
 
+import android.util.Log;
+
 import java.io.File;
 import java.util.HashMap;
 
@@ -10,7 +12,7 @@ import com.example.myapplication.utils.Http;
 
 public class BasePostRequest {
     private String url = null;                                  // URL
-    private HashMap<String, String> param = new HashMap<>();    // 请求参数
+    protected HashMap<String, String> param = new HashMap<>();    // 请求参数
     private String fileKey = null;                              // 文件键值
     private File fileObject = null;                             // 文件对象
     private Callback callback;                                  // 回调函数
@@ -20,7 +22,7 @@ public class BasePostRequest {
      *
      * @param url {String} 请求URL
      */
-    protected void to(String url) {
+    public void to(String url) {
         this.url = url;
     }
 
@@ -30,11 +32,15 @@ public class BasePostRequest {
      * @param key   {String} 参数 键
      * @param value {String>} 参数 值
      */
-    protected void put(String key, String value) {
+    public void put(String key, String value) {
         if (!Valid.isBlank(key) && !Valid.isBlank(value)) {
             this.param.put(key, value);
         }
+//        if (!this.param.isEmpty()) {
+//            Log.i("debug" , this.param.get("title"));
+//        }
     }
+
 
     /**
      * 加载文件参数
@@ -42,7 +48,7 @@ public class BasePostRequest {
      * @param fileKey    {String} 文件 键值
      * @param fileObject {String>} 文件 对象
      */
-    protected void load(String fileKey, File fileObject) {
+    public void load(String fileKey, File fileObject) {
         if (!Valid.isBlank(fileKey) && fileObject != null) {
             this.fileKey = fileKey;
             this.fileObject = fileObject;
@@ -54,7 +60,7 @@ public class BasePostRequest {
      *
      * @param callback {Callback} 回调函数
      */
-    protected void call(okhttp3.Callback callback) {
+    public void call(okhttp3.Callback callback) {
         this.callback = callback;
     }
 
