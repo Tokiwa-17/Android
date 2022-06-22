@@ -16,13 +16,13 @@ import java.util.List;
 import okhttp3.Callback;
 
 
-public class addPost extends BaseGetRequest {
+public class addPost extends BasePostRequest {
     public addPost(Callback callback, String mId, String title, String text, String draft_id, List<LocalMedia> files) {
 
         // 设置请求URL
         this.to("/api/post/add_post");
         //  设置请求参数
-        this.put("user_id", user_id);
+        this.put("user_id", mId);
         this.put("title", title);
         this.put("text",text);
         int img_num = 0, aud_num = 0, vid_num = 0;

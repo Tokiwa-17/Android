@@ -80,8 +80,8 @@ public class PostActivity extends BaseActivity {
     private RecyclerView mRecyclerView;
     private PopupWindow pop;
 
-    private FormEditText title;
-    private FormEditText text;
+    private TextView title;
+    private TextView text;
     private TextView post_btn;
     private TextView delete_btn;
     private String draft_id;
@@ -105,43 +105,43 @@ public class PostActivity extends BaseActivity {
         setContentView(R.layout.activity_post);
         title = findViewById(R.id.post_title);
         text = findViewById(R.id.post_content);
-
+        Intent intent = getIntent();
         post_btn = findViewById(R.id.confirm_post);
         delete_btn = findViewById(R.id.delete_post);
         title.setText(intent.getStringExtra("title"));
         text.setText(intent.getStringExtra("text"));
         draft_id = intent.getStringExtra("draft_id");
-        post_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new addPost(new okhttp3.Callback() {
-                    @Override
-                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                        if (Global.HTTP_DEBUG_MODE)
-                            Log.e("HttpError", e.toString());
-                    }
-                    @Override
-                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                        try {
-                            if (response.code() != 200) {
-                                //LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "获取关注列表失败..."));
-                            } else {
-                                ResponseBody responseBody = response.body();
-                                String responseBodyString = responseBody != null ? responseBody.string() : "";
-                                if (Global.HTTP_DEBUG_MODE) {
-                                    Log.e("HttpResponse", responseBodyString);
-                                }
-                            }
-                        }
-                        catch (Exception e) {
-                            if (Global.HTTP_DEBUG_MODE)
-                                Log.e("HttpResponse", e.toString());
-                        }
-                    }
-                },BasicInfo.mId, title.getText().toString(), text.getText().toString(), draft_id).send();
-                PostActivity.this.finish();
-            }
-        });
+//        post_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                new addPost(new okhttp3.Callback() {
+//                    @Override
+//                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+//                        if (Global.HTTP_DEBUG_MODE)
+//                            Log.e("HttpError", e.toString());
+//                    }
+//                    @Override
+//                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+//                        try {
+//                            if (response.code() != 200) {
+//                                //LoginActivity.this.runOnUiThread(() -> Hint.showLongCenterToast(LoginActivity.this, "获取关注列表失败..."));
+//                            } else {
+//                                ResponseBody responseBody = response.body();
+//                                String responseBodyString = responseBody != null ? responseBody.string() : "";
+//                                if (Global.HTTP_DEBUG_MODE) {
+//                                    Log.e("HttpResponse", responseBodyString);
+//                                }
+//                            }
+//                        }
+//                        catch (Exception e) {
+//                            if (Global.HTTP_DEBUG_MODE)
+//                                Log.e("HttpResponse", e.toString());
+//                        }
+//                    }
+//                },BasicInfo.mId, title.getText().toString(), text.getText().toString(), draft_id).send();
+//                PostActivity.this.finish();
+//            }
+//        });
         delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,7 +202,8 @@ public class PostActivity extends BaseActivity {
                 };
                 Log.e("title", title.getText().toString());
                 Log.e("title2", title.toString());
-                new addPost(callback, BasicInfo.mId, title.getText().toString(),text.getText().toString(), selectList).send();
+                new addPost(callback, BasicInfo.mId, title.getText().toString(),text.getText().toString(), draft_id, selectList).send();
+                PostActivity.this.finish();
             }
         };
         confirmButton.setOnClickListener(clickListener);
