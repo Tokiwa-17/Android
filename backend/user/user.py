@@ -1,3 +1,4 @@
+#coding=utf-8
 from flask import Blueprint, request, jsonify
 from .models import User
 from ..db import db
@@ -21,13 +22,13 @@ def test_user():
 @user.route('/api/user/login', methods=['GET', 'POST'])
 def user_login():
     data = request.form
-    print(f"data:{data}")
+#    print(f"data:{data}")
     account = data.get('account')
     password = data.get('password')
-    print(f"account: {account}, password: {password}")
+#    print(f"account: {account}, password: {password}")
     user = User.query.filter(User.account == account).first()
-    print(f'user: {user}')
-    print(f'json:{user.to_json()}')
+#    print(f'user: {user}')
+#    print(f'json:{user.to_json()}')
     if user != None and user.password == password:
         return user.to_json(), 200
     return "登录失败", 404
@@ -36,7 +37,7 @@ def user_login():
 @user.route('/api/user/logon', methods=['GET', 'POST'])
 def user_logon():
     data = request.form
-    print(f"data:{data}")
+#    print(f"data:{data}")
     account = data.get('account')
     password = data.get('password')
     new_user = User()
@@ -45,7 +46,7 @@ def user_logon():
     new_user.nickname = "user_" + new_user.id[0:10]
     db.session.add(new_user)
     db.session.commit()
-    print(f"account: {account}, password: {password}")
+#    print(f"account: {account}, password: {password}")
     return "OK", 200
 
 @user.route('/api/user/update_user_info', methods=['POST'])
@@ -59,6 +60,6 @@ def user_update_info():
     user.nickname = nickname
     user.password = password
     user.introduction = intro
-    print(f'nickname: {nickname}, password: {password}, intro: {intro}')
+#    print(f'nickname: {nickname}, password: {password}, intro: {intro}')
     db.session().commit()
     return {"nickname": nickname, "password": password, "introduction": intro}, 200

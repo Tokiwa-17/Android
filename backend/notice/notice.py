@@ -1,3 +1,4 @@
+#coding=utf-8
 from flask import Blueprint, request, jsonify
 from .models import Notice
 from ..db import db
@@ -24,7 +25,7 @@ def test_url2():
 @notice.route('/api/notice/get_notice_list', methods=['GET', 'POST'])  # 前端向后端数据库发送数据
 def get_notice_list():
     id = request.args.get('user_id')
-    print(f'id: {id}')
+#    print(f'id: {id}')
     notice_list = []
     notice_query = Notice.query.filter(Notice.user_id == id)
     if notice_query != None:

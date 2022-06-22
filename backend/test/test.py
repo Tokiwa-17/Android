@@ -1,3 +1,4 @@
+#coding=utf-8
 from flask import Blueprint, request, jsonify
 from .models import Test
 from ..db import db
@@ -12,7 +13,7 @@ def test_url():
 @test.route('/test2', methods=['GET', 'POST']) # 前端向后端数据库发送数据
 def test_url2():
     new_id = request.args.get("id")
-    print(f"new_id: {new_id}")
+#    print(f"new_id: {new_id}")
     new_test = Test()
     # new_test.id = str(new_id)
     db.session.add(new_test)
@@ -22,9 +23,9 @@ def test_url2():
 @test.route('/test/post', methods=['POST']) # 测试post发送登录数据
 def test_post():
     data = request.form
-    print(f"data:{data}")
+#    print(f"data:{data}")
     account = data.get('account')
     password = data.get('password')
-    print(f"account: {account}, password: {password}")
+#    print(f"account: {account}, password: {password}")
     return "OK", 200
 

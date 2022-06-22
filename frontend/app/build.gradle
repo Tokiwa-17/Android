@@ -37,6 +37,7 @@ dependencies {
     implementation("com.jakewharton:butterknife:10.2.1")
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
     annotationProcessor("com.jakewharton:butterknife-compiler:10.2.1")
     implementation("com.squareup.okhttp3:okhttp:4.5.0")
     implementation 'de.hdodenhof:circleimageview:3.1.0'

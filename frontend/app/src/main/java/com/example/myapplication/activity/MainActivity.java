@@ -457,8 +457,13 @@ public class MainActivity extends AppCompatActivity {
                         String time = subJsonObject.getString("time");
                         String postId = subJsonObject.getString("postId");
                         String userId = subJsonObject.getString("userId");
+                        String image_url = subJsonObject.getString("image_url");
+//                        Log.e("dad3", imageUrl);
+//                        String videoUrl = subJsonObject.getString("video_url");
+//                        String audioUrl = subJsonObject.getString("audio_url");
                         PostInfo post = new PostInfo(postId, userId, name,avatar_url,title, text,like,time);
                         BasicInfo.mPostList.add(post);
+                        BasicInfo.mPostList.get(BasicInfo.mPostList.size() - 1).setImageUrl(image_url);
                     }
                 }
             } catch (Exception e) {

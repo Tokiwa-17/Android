@@ -1,3 +1,4 @@
+#coding=utf-8
 from flask import Blueprint, request, jsonify
 from .models import Comment
 from ..db import db
@@ -22,9 +23,9 @@ def test_url2():
 @comment.route('/comment/test/post', methods=['POST']) # 测试post发送登录数据
 def test_post():
     data = request.form
-    print(f"data:{data}")
+#    print(f"data:{data}")
     account = data.get('account')
     password = data.get('password')
-    print(f"account: {account}, password: {password}")
+#    print(f"account: {account}, password: {password}")
     return "OK", 200
 

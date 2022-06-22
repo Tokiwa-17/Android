@@ -44,9 +44,15 @@
         <entry key="app/src/main/res/drawable-v24/ic_baseline_videocam_24.xml" value="0.137" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1265625" />
         <entry key="app/src/main/res/layout/activity_post.xml" value="0.182518115942029" />
+        <entry key="app/src/main/res/layout/activity_post_detail.xml" value="0.12968591691995948" />
+        <entry key="app/src/main/res/layout/activity_visit_home_page.xml" value="0.182518115942029" />
         <entry key="app/src/main/res/layout/dialog_picturefrom.xml" value="0.182518115942029" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.182518115942029" />
+        <entry key="app/src/main/res/layout/fragment_postlist.xml" value="0.1" />
         <entry key="app/src/main/res/layout/gv_filter_image.xml" value="0.182518115942029" />
         <entry key="app/src/main/res/layout/image_view.xml" value="0.1265625" />
+        <entry key="app/src/main/res/layout/my_post_item.xml" value="0.12968591691995948" />
+        <entry key="app/src/main/res/layout/post_item.xml" value="0.12968591691995948" />
       </map>
     </option>
   </component>
