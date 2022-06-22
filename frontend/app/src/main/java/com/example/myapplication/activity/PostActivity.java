@@ -322,22 +322,22 @@ public class PostActivity extends BaseActivity {
         @Override
         public void onAddPicClick() {
             //获取写的权限
-            RxPermissions rxPermission = new RxPermissions(PostActivity.this);
-            rxPermission.requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    .subscribe(new Consumer<Permission>() {
-                        @Override
-                        public void accept(Permission permission) {
-                            if (permission.granted) {// 用户已经同意该权限
-                                //第一种方式，弹出选择和拍照的dialog
-//                                showPop();
-
-                                //第二种方式，直接进入相册，但是 是有拍照得按钮的
-                                showAlbum();
-                            } else {
-                                Toast.makeText(PostActivity.this, "拒绝", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+//            RxPermissions rxPermission = new RxPermissions(PostActivity.this);
+//            rxPermission.requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                    .subscribe(new Consumer<Permission>() {
+//                        @Override
+//                        public void accept(Permission permission) {
+//                            if (permission.granted) {// 用户已经同意该权限
+//                                //第一种方式，弹出选择和拍照的dialog
+////                                showPop();
+//
+//                                //第二种方式，直接进入相册，但是 是有拍照得按钮的
+//                                showAlbum();
+//                            } else {
+//                                Toast.makeText(PostActivity.this, "拒绝", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    });
         }
     };
 
