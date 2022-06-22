@@ -7,5 +7,5 @@
   flask run
 ```  
 
-## apk文件位置：
+## apk文件位置
   `Android/frontend/app/release/app-release.apk`
