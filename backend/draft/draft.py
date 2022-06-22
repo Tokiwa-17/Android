@@ -43,4 +43,31 @@ def get_draft():
                  'text': text, 'like': 0, 'time': time})
     return {'draft_list': draft_list}, 200
 
+@draft.route('/api/draft/add_draft', methods=['GET', 'POST']) # 前端向后端数据库发送数据
+def add_draft():
+    user_id = request.args.get('user_id')
+    draft_id = request.args.get('draft_id')
+    if draft_id:
+        draft = Draft.query.filter(Draft.draft_id == draft_id).first()
+    else:
+        draft = Draft()
+    title = request.args.get('title')
+    text = request.args.get('text')
+    draft.user_id = user_id
+    draft.title = title
+    draft.text = text
+    if not draft_id:
+        db.session.add(draft)
+    db.session.commit()
+    return {'draft_id': draft.draft_id}, 200
+
+@draft.route('/api/draft/delete_draft', methods=['GET', 'POST']) # 前端向后端数据库发送数据
+def delete_draft():
+    draft_id = request.args.get('draft_id')
+    if draft_id:
+        draft = Draft.query.filter(Draft.draft_id == draft_id).first()
+        db.session.delete(draft)
+        db.session.commit()
+    return {'draft_id': draft_id}, 200
+
 

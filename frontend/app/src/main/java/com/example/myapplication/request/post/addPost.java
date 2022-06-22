@@ -15,8 +15,10 @@ import java.util.List;
 
 import okhttp3.Callback;
 
-public class addPost extends BasePostRequest {
-    public addPost(Callback callback, String user_id, String title, String text, List<LocalMedia> files) {
+
+public class addPost extends BaseGetRequest {
+    public addPost(Callback callback, String mId, String title, String text, String draft_id, List<LocalMedia> files) {
+
         // 设置请求URL
         this.to("/api/post/add_post");
         //  设置请求参数
@@ -46,6 +48,8 @@ public class addPost extends BasePostRequest {
 //        for (int i = 0; i < files.size(); i++) {
 //            this.load(String.valueOf(i),files.get(i));
 //        }
+
+        this.put("draft_id", draft_id);
         // 设置回调函数
         this.call(callback);
         //Log.e("SSS", this.param.get("title"));
